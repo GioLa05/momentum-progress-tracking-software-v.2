@@ -1,0 +1,19 @@
+.button {
+  width: auto;
+  height: auto;
+  padding: 10px 20px;
+  background-color: #8338ec;
+  color: white;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: none;
+}
+
+.button:hover {
+  background-color: #b588f4;
+  animation-timing-function: ease-out;
+  animation-duration: 300ms;
+}

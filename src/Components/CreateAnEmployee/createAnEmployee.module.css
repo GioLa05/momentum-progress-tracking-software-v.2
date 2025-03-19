@@ -1,0 +1,14 @@
+.button {
+  width: auto;
+  height: auto;
+  border-radius: 5px;
+  gap: 10px;
+  padding: 10px 20px;
+  border: 1px solid #8338ec;
+  background-color: transparent;
+}
+
+.button:hover {
+  border: 1px solid #B588F4;
+  animation-duration: 300ms;
+}

@@ -1,0 +1,18 @@
+.button {
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 0;
+  border: none;
+  background-color: transparent;
+  color: #8338ec;
+}
+
+.button:hover {
+  opacity: 0.5;
+  animation-timing-function: ease-out;
+  animation-duration: 300ms;
+}
