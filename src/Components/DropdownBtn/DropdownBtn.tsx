@@ -6,8 +6,8 @@ import DropdownIcon from "@/icons/DropdownIcon";
 
 type Props = {
   text: "დეპარტამენტი" | "პრიორიტეტი" | "თანამშრომელი";
-  isActive: boolean;
-  onClick: () => void;
+  isActive?: boolean;
+  onClick?: () => void;
 };
 
 const DropdownBtn = ({ text, isActive, onClick }: Props) => {

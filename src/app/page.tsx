@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import styles from "./page.module.css";
 import CreateNewTask from "../Components/CreateNewTask/CreateNewTask";
@@ -14,13 +16,19 @@ import Answer from "@/Components/Answer/answer";
 import Progress from "@/Components/Progress/progress";
 import Dropdown from "@/Components/Dropdown/Dropdown";
 import CheckboxBtn from "@/Components/CheckboxBtn/CheckboxBtn";
+import DropdownContent from "@/Components/DropdownContent/DropdownContent";
+import DatePickerNative from "@/Components/Calendar/DatePickerNative";
 
 export default function Home() {
   return (
     <div className={styles.page}>
+      <DatePickerNative />
+      <Dropdown />
+      <SelectedFilter name="გიოლა" />
+      <SelectedFilter name="ვინმე" />
+      <DropdownContent />
       <CheckboxBtn label="დიზაინის დეპარტამენტი" />
       <CheckboxBtn imageSrc="/Coworker.png" label="მარკეტინგის დეპარტამენტი" />
-      <Dropdown />
       <Progress text="დასაწყები" />
       <Progress text="პროგრესში" />
       <Progress text="მზად ტესტირებისთვის" />
@@ -37,9 +45,12 @@ export default function Home() {
         text="დიზაინი სუფთად ჩანს, მაგრამ კოდირებისას მნიშვნელოვანი იქნება."
         imageSrc="/Coworker.png"
       />
-      <SelectedFilter name="გიოლა" />
-      <SelectedFilter name="ვინმე" />
-      <Task />
+      <Task
+        comments={8}
+        date="22 იანვ, 2022"
+        title="Redberry-ს საიტის ლენდინგის დიზაინი "
+        description="შექმენი საიტის მთავარი გვერდი, რომელიც მოიცავს მთავარ სექციებს, ნავიგაციას."
+      />
       <CreateNewTask />
       <AnswerBtn />
       <CreateAnEmployee />
