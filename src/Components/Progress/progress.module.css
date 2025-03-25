@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.top {
+  width: 381px;
+  height: 54px;
+  border-radius: 10px;
+  padding: 15px 0;
+  color: white;
+  background-color: black;
+  text-align: center;
+  font-family: FiraGO;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+.yellow {
+  background-color: #f7bc30;
+}
+
+.orange {
+  background-color: #fb5607;
+}
+
+.pink {
+  background-color: #FF006E;
+}
+
+.blue {
+  background-color: #3A86FF;
+}

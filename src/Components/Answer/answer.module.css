@@ -1,18 +1,43 @@
-.button {
+.container {
+  display: flex;
+  gap: 12px;
+}
+
+.infoLeft {
   width: auto;
   height: auto;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 6px 0;
-  border: none;
-  background-color: transparent;
-  color: #8338ec;
+  justify-content: start;
 }
 
-.button:hover {
-  opacity: 0.5;
-  animation-timing-function: ease-out;
-  animation-duration: 300ms;
+.infoRight {
+  width: 548px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 10px;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.h1 {
+  font-family: FiraGO;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #212529;
+}
+
+.h2 {
+  font-family: FiraGO;
+  font-weight: 350;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #343a40;
 }

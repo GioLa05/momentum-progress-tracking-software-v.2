@@ -1,0 +1,21 @@
+.button {
+  width: 520px;
+  height: auto;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 15px;
+  border: none;
+  background-color: white;
+  font-family: FiraGO;
+  font-weight: 300;
+  font-size: 14px;
+  color: #0d0f10;
+}
+
+.button:hover {
+  background-color: #f8f9fa;
+  animation-duration: 300ms;
+  animation: ease-in;
+}

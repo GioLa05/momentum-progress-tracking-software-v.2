@@ -6,11 +6,12 @@
   padding: 8px 20px;
   border: none;
   background-color: #8338EC;
+  text-align: center;
   color: white;
 }
 
 .button:hover {
-  opacity: 0.5;
+  background-color: #B588F4;
   animation-timing-function: ease-out;
   animation-duration: 300ms;
 }

@@ -1,0 +1,16 @@
+.container {
+  width: 199px;
+  height: 44px;
+  border-radius: 5px;
+  padding-left: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: black;
+}
+
+.active {
+  color: #8338ec;
+}
+

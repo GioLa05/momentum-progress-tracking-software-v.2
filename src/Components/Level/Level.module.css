@@ -1,0 +1,41 @@
+.button {
+  padding-left: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: white;
+  border: 0.5px solid black;
+}
+
+.small {
+  width: 86px;
+  height: 26px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 150%;
+  border-radius: 3px;
+}
+
+.big {
+  width: 106px;
+  height: 32px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  border-radius: 4px;
+}
+
+.yellow {
+    border-color: #FFBE0B;
+    color: #FFBE0B;
+}
+
+.green {
+    border-color: #08A508;
+    color: #08A508;
+}
+
+.red {
+    border-color: #FA4D4D;
+    color: #FA4D4D;
+}

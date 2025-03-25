@@ -1,0 +1,20 @@
+.button {
+  width: auto;
+  height: auto;
+  border-radius: 43px;
+  gap: 4px;
+  padding: 6px 10px;
+  border-width: 1px;
+  background-color: white;
+  border: 1px solid #ced4da;
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  color: #343A40;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
