@@ -18,10 +18,79 @@ import Dropdown from "@/Components/Dropdown/Dropdown";
 import CheckboxBtn from "@/Components/CheckboxBtn/CheckboxBtn";
 import DropdownContent from "@/Components/DropdownContent/DropdownContent";
 import DatePickerNative from "@/Components/Calendar/DatePickerNative";
+import ResponsibleEmployee from "@/Components/ResponsibleEmployee/ResponsibleEmployee";
+import EmployeeName from "@/Components/ResponsibleEmployee/ResponsibleEmployee";
+import MainComponent from "@/Components/ResponsibleEmployee/ResponsibleEmployee";
+import PriorityDropdown from "@/Components/PriorityDropdown/PriorityDropdown";
+import StatusDropdown from "@/Components/StatusDropdown/StatusDropdown";
+import UploadPhoto from "@/Components/UploadPhoto/UploadPhoto";
+import UploadPhotoButton from "@/Components/UploadPhotoButton/UploadPhotoButton";
 
 export default function Home() {
   return (
     <div className={styles.page}>
+      <UploadPhotoButton />
+      <UploadPhoto />
+      <StatusDropdown />
+      <PriorityDropdown />
+      <MainComponent
+        placeholder=""
+        type="text"
+        iconSrc="icon-source"
+        disabled={false}
+        label={""}
+      />
+      {/* MainComponent with "name" type */}
+      <MainComponent
+        placeholder=""
+        type="text"
+        iconSrc="icon-source"
+        disabled={false}
+        label={""}
+      />
+      {/* MainComponent with "name" type */}
+      <MainComponent
+        placeholder=""
+        type="name"
+        iconSrc="icon-source"
+        disabled={false}
+        label={""}
+      />
+      {/* MainComponent with "name" type */}
+      <MainComponent
+        placeholder=""
+        type="surname"
+        iconSrc="icon-source"
+        disabled={false}
+        label={""}
+      />
+      {/* ResponsibleEmployee with "responsible" type */}
+      <EmployeeName
+        label="პასუხისმგებელიsasa"
+        placeholder="დასაწყები"
+        type="responsible"
+        iconSrc="icon-source"
+        disabled={false} // Set as needed
+      />
+
+      {/* ResponsibleEmployee with "department" type */}
+      <ResponsibleEmployee
+        label="დეპარტამენტი"
+        placeholder="დასაწყები"
+        type="department"
+        iconSrc="icon-source"
+        disabled={false} // Set as needed
+      />
+
+      <AddedCoworker type="employee" name="ნატალია გიორგაძე" />
+      <AddedCoworker type="department" name="IT დეპარტამენტი" />
+      <ResponsibleEmployee
+        placeholder="დასაწყები"
+        type="text"
+        iconSrc="icon.svg"
+        disabled={false}
+      />
+
       <DatePickerNative />
       <Dropdown />
       <SelectedFilter name="გიოლა" />

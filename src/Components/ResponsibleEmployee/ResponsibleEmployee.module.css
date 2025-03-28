@@ -1,0 +1,87 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.header {
+  padding-block: 6px;
+  font-family: FiraGO;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #343a40;
+}
+
+.inputField {
+  width: 550px;
+  height: 45px;
+  border-radius: 5px;
+  border-width: 1px;
+  padding: 14px;
+  background: #ffffff;
+  border: 1px solid #ff99ff;
+}
+
+.bottomText {
+  font-family: FiraGO;
+  font-weight: 350;
+  font-size: 10px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #6c757d;
+  padding-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.disabledText {
+  color: #dee2e6;
+}
+
+.disabled {
+  opacity: 0.5;
+}
+
+.inputField {
+  width: 550px;
+  height: 45px;
+  border-radius: 5px;
+  border-width: 1px;
+  padding: 14px;
+  background: #ffffff;
+  border: 1px solid #ff99ff;
+}
+
+/* ResponsibleEmployee specific styles */
+.headerResponsibleEmployee {
+  padding-block: 6px;
+  font-family: FiraGO;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #343a40;
+}
+
+/* EmployeeName specific styles */
+.headerEmployeeName {
+  padding-block: 6px;
+  font-family: FiraGO;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #343a40;
+}
+
+/* Add these styles to ResponsibleEmployee.module.css */
+.validText {
+  color: #08a508; /* Green color for valid input */
+}
+
+.invalidText {
+  color: red; /* Red color for invalid input */
+}

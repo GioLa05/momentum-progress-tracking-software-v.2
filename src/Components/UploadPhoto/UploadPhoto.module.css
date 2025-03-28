@@ -1,0 +1,56 @@
+.container {
+  width: 813px;
+  height: 120px;
+  border-radius: 8px;
+  border-width: 1px;
+  background-color: white;
+  border: 1px dashed #ced4da;
+  display: flex;
+  justify-content: center;
+  position: relative; /* Needed for positioning the delete button on top */
+}
+
+.button {
+  width: 136px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+  gap: 5px;
+  font-family: FiraGO;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #343a40;
+}
+
+.uploadButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding-top: 50px; /* Default padding for the upload button */
+}
+
+.noPadding {
+  padding-top: 0; /* Ensure padding is removed when the photo is uploaded */
+}
+
+.deleteButton {
+  position: absolute; /* Position it absolutely within the container */
+  top: 83px; /* Adjust to position on top of the photo */
+  left: 430px; /* Center it horizontally */
+  transform: translateX(-50%); /* Align it properly */
+  cursor: pointer;
+}
+
+.photoGroup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 16px; /* Add top padding to the photo group */
+}

@@ -30,7 +30,7 @@ const Progress = (props: Props) => {
       <Task
         borderColor={color}
         comments={8}
-        date="22 იანვ, 2022"
+        date=" 22 იანვ, 2022"
         title="Redberry-ს საიტის ლენდინგის დიზაინი "
         description="შექმენი საიტის მთავარი გვერდი, რომელიც მოიცავს მთავარ სექციებს, ნავიგაციას."
       />

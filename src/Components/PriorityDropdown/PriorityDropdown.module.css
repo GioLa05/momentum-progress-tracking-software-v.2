@@ -1,0 +1,75 @@
+/* Wrapper for the entire dropdown (button and options) with one border */
+.dropdownContainer {
+  width: 259px;
+  border: 1px solid #adb5bd; /* Default border color */
+  border-radius: 5px;
+  background-color: white;
+  transition: border-color 0.3s ease; /* Smooth transition for border color */
+  overflow: hidden;
+}
+
+/* Change border color when the dropdown is open */
+.openBorder {
+  border-color: #8338ec;
+}
+
+/* Style for the dropdown button */
+.dropdown {
+  width: 100%;
+  height: 46px;
+  gap: 6px;
+  padding: 14px;
+  padding-right: 40px; /* Space for the icon */
+  background-color: white;
+  color: #0d0f10;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Style for the input icon */
+.inputIcon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 15px;
+  color: #343a40;
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* Rotate the icon when the dropdown is open */
+.openIcon {
+  transform: translateY(-50%) rotate(180deg);
+  color: #8338ec;
+}
+
+/* Dropdown content styling */
+.dropdownContent {
+  width: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #adb5bd; /* Border between button and options */
+  border: none;
+}
+
+/* Style for each option inside the dropdown */
+.option {
+  width: 100%;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 14px;
+  background-color: white;
+  color: #343a40;
+  cursor: pointer;
+}
+
+/* Hover effect for the options */
+.option:hover {
+  background-color: #f1f1f1;
+}
