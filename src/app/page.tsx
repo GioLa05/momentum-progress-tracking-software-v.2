@@ -24,12 +24,10 @@ import MainComponent from "@/Components/ResponsibleEmployee/ResponsibleEmployee"
 import PriorityDropdown from "@/Components/PriorityDropdown/PriorityDropdown";
 import StatusDropdown from "@/Components/StatusDropdown/StatusDropdown";
 import UploadPhoto from "@/Components/UploadPhoto/UploadPhoto";
-import UploadPhotoButton from "@/Components/UploadPhotoButton/UploadPhotoButton";
 
 export default function Home() {
   return (
     <div className={styles.page}>
-      <UploadPhotoButton />
       <UploadPhoto />
       <StatusDropdown />
       <PriorityDropdown />
@@ -125,17 +123,9 @@ export default function Home() {
       <CreateAnEmployee />
       <LargePrimaryButton text="Buttoniiii" />
       <RankButton color="pink" text="დიზაინი" />
-      <RankButton color="orange" text="მარკეტინგი" />
-      <RankButton color="blue" text="ლოჯისტიკა" />
-      <RankButton color="yellow" text="ინფ. ტექ." />
       <AddCoworker />
       <AddedCoworker />
       <Level priority="high" size="big" />
-      <Level priority="medium" size="big" />
-      <Level priority="low" size="big" />
-      <Level priority="high" size="small" />
-      <Level priority="medium" size="small" />
-      <Level priority="low" size="small" />
     </div>
   );
 }
