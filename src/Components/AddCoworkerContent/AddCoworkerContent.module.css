@@ -1,0 +1,66 @@
+.containerBackground {
+  position: fixed; /* Make it fixed so it stays on top */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(13, 15, 16, 0.15); /* Add opacity for background */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center the content */
+  z-index: 9999; /* Ensure it's above other components */
+}
+
+.container {
+  width: 913px;
+  height: auto;
+  background-color: white;
+  gap: 37px;
+  border-radius: 10px;
+  padding: 40px 50px 60px 50px;
+  display: flex;
+  flex-direction: column;
+  z-index: 10000; /* Ensure content inside stays above background */
+}
+
+.closeIcon {
+  width: 100%;
+  max-width: 913px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.containerContentPlusText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 45px;
+  font-family: FiraGO;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 100%;
+  text-align: center;
+  color: #212529;
+}
+
+.containerContent {
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
+}
+
+.nameSurname {
+  width: 813px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.bottomButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  font-size: 16px;
+}

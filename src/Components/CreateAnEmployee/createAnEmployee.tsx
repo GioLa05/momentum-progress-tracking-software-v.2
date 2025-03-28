@@ -1,10 +1,8 @@
-import React from 'react'
-import styles from './createAnEmployee.module.css'
+import React from "react";
+import styles from "./createAnEmployee.module.css";
 
-const CreateAnEmployee = () => {
-  return (
-    <button className={styles.button}>თანამშრომლის შექმნა</button>
-  )
-}
+const CreateAnEmployee = ({ text = "თანამშრომლის შექმნა", onClick }) => {
+  return <button className={styles.button} onClick={onClick}>{text}</button>;
+};
 
-export default CreateAnEmployee
+export default CreateAnEmployee;

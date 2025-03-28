@@ -1,14 +1,21 @@
 .button {
   width: auto;
-  height: auto;
+  height: 42px;
   border-radius: 5px;
   gap: 10px;
   padding: 10px 20px;
   border: 1px solid #8338ec;
   background-color: transparent;
+  font-family: FiraGO;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  color: #343A40;
 }
 
 .button:hover {
-  border: 1px solid #B588F4;
+  border: 1px solid #b588f4;
   animation-duration: 300ms;
 }

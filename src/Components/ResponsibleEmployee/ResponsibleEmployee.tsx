@@ -8,6 +8,8 @@ type Props = {
   iconSrc: string;
   disabled?: boolean;
   label: string;
+  size?: "small" | "big"; // New prop to control size
+  hideBottomText?: boolean; // New prop to hide bottom text
 };
 
 const EmployeeName = ({
@@ -16,9 +18,11 @@ const EmployeeName = ({
   iconSrc,
   disabled = false,
   label,
+  size = "big", // Default size is "big"
+  hideBottomText = false, // Default to false, meaning bottom text is shown
 }: Props) => {
   return (
-    <div className={`${styles.main} ${disabled ? styles.disabled : ""}`}>
+    <div className={`${styles.main} ${disabled ? styles.disabled : ""} ${size === "small" ? styles.smallWidth : ""}`}>
       <p className={`${styles.header} ${disabled ? styles.disabledText : ""}`}>
         {label}
       </p>
@@ -27,11 +31,14 @@ const EmployeeName = ({
         type={type}
         iconSrc={iconSrc}
         disabled={disabled}
+        size={size} // Pass size to InputWithIcon
       />
-      <div className={styles.bottomText}>
-        <p className={styles.characterLimitText}>მინიმუმ 2 სიმბოლო</p>
-        <p className={styles.characterLimitText}>მაქსიმუმ 255 სიმბოლო</p>
-      </div>
+      {!hideBottomText && (
+        <div className={styles.bottomText}>
+          <p className={styles.characterLimitText}>მინიმუმ 2 სიმბოლო</p>
+          <p className={styles.characterLimitText}>მაქსიმუმ 255 სიმბოლო</p>
+        </div>
+      )}
     </div>
   );
 };
@@ -42,9 +49,11 @@ const ResponsibleEmployee = ({
   iconSrc,
   disabled = false,
   label,
+  size = "big", // Default size is "big"
+  hideBottomText = false, // Default to false, meaning bottom text is shown
 }: Props) => {
   return (
-    <div className={`${styles.main} ${disabled ? styles.disabled : ""}`}>
+    <div className={`${styles.main} ${disabled ? styles.disabled : ""} ${size === "small" ? styles.smallWidth : ""}`}>
       <p className={`${styles.header} ${disabled ? styles.disabledText : ""}`}>
         {label}
       </p>
@@ -53,16 +62,26 @@ const ResponsibleEmployee = ({
         type={type}
         iconSrc={iconSrc}
         disabled={disabled}
+        size={size} // Pass size to InputWithIcon
       />
-      <div className={styles.bottomText}>
-        <p className={styles.characterLimitText}>მინიმუმ 2 სიმბოლო</p>
-        <p className={styles.characterLimitText}>მაქსიმუმ 255 სიმბოლო</p>
-      </div>
+      {!hideBottomText && (
+        <div className={styles.bottomText}>
+          <p className={styles.characterLimitText}>მინიმუმ 2 სიმბოლო</p>
+          <p className={styles.characterLimitText}>მაქსიმუმ 255 სიმბოლო</p>
+        </div>
+      )}
     </div>
   );
 };
 
-const MainComponent = ({ placeholder, type, iconSrc, disabled }: Props) => {
+const MainComponent = ({
+  placeholder,
+  type,
+  iconSrc,
+  disabled,
+  size,
+  hideBottomText, // Add hideBottomText to MainComponent props
+}: Props) => {
   const labelText =
     type === "name"
       ? "სახელი*"
@@ -81,6 +100,8 @@ const MainComponent = ({ placeholder, type, iconSrc, disabled }: Props) => {
           iconSrc={iconSrc}
           disabled={disabled}
           label={labelText}
+          size={size} // Pass size here
+          hideBottomText={hideBottomText} // Pass hideBottomText here
         />
       ) : (
         <ResponsibleEmployee
@@ -89,6 +110,8 @@ const MainComponent = ({ placeholder, type, iconSrc, disabled }: Props) => {
           iconSrc={iconSrc}
           disabled={disabled}
           label={labelText}
+          size={size} // Pass size here
+          hideBottomText={hideBottomText} // Pass hideBottomText here
         />
       )}
     </div>

@@ -1,6 +1,6 @@
 .button {
   width: auto;
-  height: auto;
+  height: 42px;
   padding: 10px 20px;
   background-color: #8338ec;
   color: white;
@@ -10,6 +10,11 @@
   justify-content: center;
   gap: 4px;
   border: none;
+  font-family: FiraGO;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0%;
 }
 
 .button:hover {

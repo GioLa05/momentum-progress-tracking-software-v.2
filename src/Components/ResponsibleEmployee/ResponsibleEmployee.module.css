@@ -1,7 +1,8 @@
 .main {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: flex-start;
+  gap: 3px;
 }
 
 .header {
@@ -15,13 +16,18 @@
 }
 
 .inputField {
-  width: 550px;
+  width: 550px; /* Default width */
   height: 45px;
   border-radius: 5px;
   border-width: 1px;
   padding: 14px;
   background: #ffffff;
   border: 1px solid #ff99ff;
+}
+
+/* Apply small width if size="small" */
+.smallWidth .inputField {
+  width: 384px; /* Width for small size */
 }
 
 .bottomText {
@@ -35,6 +41,8 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
+  padding-top: 3px;
+  text-align: left;
 }
 
 .disabledText {
@@ -45,39 +53,6 @@
   opacity: 0.5;
 }
 
-.inputField {
-  width: 550px;
-  height: 45px;
-  border-radius: 5px;
-  border-width: 1px;
-  padding: 14px;
-  background: #ffffff;
-  border: 1px solid #ff99ff;
-}
-
-/* ResponsibleEmployee specific styles */
-.headerResponsibleEmployee {
-  padding-block: 6px;
-  font-family: FiraGO;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 100%;
-  letter-spacing: 0%;
-  color: #343a40;
-}
-
-/* EmployeeName specific styles */
-.headerEmployeeName {
-  padding-block: 6px;
-  font-family: FiraGO;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 100%;
-  letter-spacing: 0%;
-  color: #343a40;
-}
-
-/* Add these styles to ResponsibleEmployee.module.css */
 .validText {
   color: #08a508; /* Green color for valid input */
 }
