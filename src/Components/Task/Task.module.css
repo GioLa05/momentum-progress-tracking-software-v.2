@@ -57,6 +57,12 @@
     width: 100%;
 }
 
+.avatarContainer{
+  width: 31px;
+  height: 31px;
+  border-radius: 50%;
+}
+
 .bottomRight {
   display: flex;
   align-items: center;

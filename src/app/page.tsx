@@ -16,7 +16,6 @@ import styles from "./page.module.css";
 // import Progress from "@/Components/Progress/progress";
 // import Dropdown from "@/Components/Dropdown/Dropdown";
 // import CheckboxBtn from "@/Components/CheckboxBtn/CheckboxBtn";
-// import DropdownContent from "@/Components/DropdownContent/DropdownContent";
 // import DatePickerNative from "@/Components/Calendar/DatePickerNative";
 // import ResponsibleEmployee from "@/Components/ResponsibleEmployee/ResponsibleEmployee";
 // import EmployeeName from "@/Components/ResponsibleEmployee/ResponsibleEmployee";
@@ -24,16 +23,26 @@ import styles from "./page.module.css";
 // import PriorityDropdown from "@/Components/PriorityDropdown/PriorityDropdown";
 // import StatusDropdown from "@/Components/StatusDropdown/StatusDropdown";
 // import UploadPhoto from "@/Components/UploadPhoto/UploadPhoto";
-import AddCoworkerContent from "@/Components/AddCoworkerContent/AddCoworkerContent";
+import DropdownList from "@/Components/Dropdown/Dropdown";
+import Progress from "@/Components/Progress/progress";
+import SelectedFilter from "@/Components/SelectedFilter/SelectedFilter";
 
 export default function Home() {
   return (
     <div className={styles.page}>
-      <p>sds</p>
-      <p>dsdsds</p>
-      <p>dsdsd</p>
-      <p>dsdsds</p>
-      <p>dsdsds</p>
+      <p className={styles.h1}>დავალებების გვერდი</p>
+      <div className={styles.dropdownList}>
+        <DropdownList />
+      </div>
+      <div className={styles.selectedFilter}>
+        <SelectedFilter name="გიოლა" />
+      </div>
+      <div className={styles.progressGroup}>
+        <Progress text="დასაწყები" />
+        <Progress text="პროგრესში" />
+        <Progress text="მზად ტესტირებისთვის" />
+        <Progress text="დასრულებული" />
+      </div>
     </div>
   );
 }

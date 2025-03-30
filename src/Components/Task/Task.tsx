@@ -27,7 +27,7 @@ const Task = ({ borderColor, comments, date, title, description }: Props) => {
         <p className={styles.h2}>{description}</p>
       </div>
       <div className={styles.bottom}>
-        <Image src={"/Coworker.png"} width={31} height={31} alt="coworker" />
+        <Image className={styles.avatarContainer} src={"/Coworker.png"} width={31} height={31} alt="coworker" />
         <div className={styles.bottomRight}>
           <Image src={"comment.svg"} width={22} height={22} alt="comment" />
           <p>{comments}</p>

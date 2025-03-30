@@ -1,3 +1,33 @@
-.page{
-    /* background-color: #202020; */
+.page {
+}
+
+.h1 {
+  font-family: FiraGO;
+  font-weight: 600;
+  font-size: 34px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #212529;
+  padding-left: 118px;
+  padding-top: 40px;
+}
+
+.dropdownList {
+  position: absolute;
+  top: 233px;
+  left: 120px;
+}
+
+.selectedFilter {
+  padding-top: 121px;
+  padding-left: 118px;
+}
+
+.progressGroup {
+  padding-top: 24px;
+  width: 1680px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 381px 381px 381px 381px;
+  gap: 52px;
 }
