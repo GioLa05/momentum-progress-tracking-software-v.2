@@ -1,4 +1,5 @@
 .main {
+  position: relative; /* აუცილებელია overlay-სთვის */
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -14,59 +15,34 @@
   background: white;
 }
 
-.dropdownWrapper {
-  position: relative;
-}
-.dropdownContentWrapper {
-  position: absolute;
-
-  transform: translateX(-50%); /* რომ იყოს ცენტრში */
-  background: white;
-  border: 1px solid #906df4;
-  border-radius: 10px;
-  padding: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
-
-.dropdownContent {
-  position: absolute;
-  top: 76px; /* რეგულირება, რომ სწორი პოზიცია ჰქონდეს */
-  left: 360px; /* რომ იყოს ცენტრში */
-  width: 100%;
-  background: white;
-  border: 1px solid #906df4;
-  border-radius: 10px;
-  padding: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 5px;
-}
-
-.option {
+.filters {
   display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
   align-items: center;
-  gap: 10px;
-  font-size: 16px;
-  padding: 5px 0;
 }
 
-.option input {
-  width: 18px;
-  height: 18px;
-}
-
-.button {
-  width: 100px;
-  background: #906df4;
-  color: white;
+.clearAll {
+  background: none;
   border: none;
-  padding: 8px 12px;
-  border-radius: 20px;
-  font-size: 16px;
+  font-size: 14px;
+  color: #666;
   cursor: pointer;
-  margin-top: 10px;
+  padding: 4px 8px;
+  border-radius: 16px;
+  transition: color 0.2s ease;
 }
 
-.button:hover {
-  background: #7749d9;
+.clearAll:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+.dropdownOverlay {
+  position: absolute;
+  top: 60px; /* დაარეგულირე შენი დიზაინის მიხედვით */
+  left: 0;
+  width: 100%;
+  z-index: 999;
 }

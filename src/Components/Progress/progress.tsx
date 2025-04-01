@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from "react";
+// Progress.tsx
+"use client";
+
+import React from "react";
 import styles from "./progress.module.css";
 import Task from "../Task/Task";
-import { API_URL, API_TOKEN } from "../../config/config";  // Import API config
 
+// Define prop types
 type Props = {
   text: "დასაწყები" | "პროგრესში" | "მზად ტესტირებისთვის" | "დასრულებული";
+  tasks: any[];
 };
 
 // Helper function to return status-specific color and class
@@ -23,36 +27,14 @@ const getColorInfo = (text: Props["text"]) => {
   }
 };
 
-const Progress = (props: Props) => {
-  const { className, color } = getColorInfo(props.text);
-  
-  const [tasks, setTasks] = useState<any[]>([]); // State to store tasks
+const Progress = ({ text, tasks }: Props) => {
+  const { className, color } = getColorInfo(text);
 
-  // Fetch tasks from API
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const response = await fetch(`${API_URL}/tasks`, {
-          headers: {
-            Authorization: `Bearer ${API_TOKEN}`,
-          },
-        });
-        const data = await response.json();
-        setTasks(data);
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
-      }
-    };
-
-    fetchTasks();
-  }, []);
-
-  // Filter tasks based on status name
-  const filteredTasks = tasks.filter((task) => task.status?.name === props.text);
+  const filteredTasks = tasks.filter((task) => task.status?.name === text);
 
   return (
     <div className={styles.container}>
-      <div className={`${styles.top} ${className}`}>{props.text}</div>
+      <div className={`${styles.top} ${className}`}>{text}</div>
 
       {filteredTasks.length > 0 ? (
         filteredTasks.map((task) => (
@@ -67,7 +49,7 @@ const Progress = (props: Props) => {
           />
         ))
       ) : (
-        <p>No tasks available for this status.</p>
+        <p>ამ სტატუსისთვის დავალება არ მოიძებნა.</p>
       )}
     </div>
   );

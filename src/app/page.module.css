@@ -18,13 +18,8 @@
   left: 120px;
 }
 
-.selectedFilter {
-  padding-top: 121px;
-  padding-left: 118px;
-}
-
 .progressGroup {
-  padding-top: 24px;
+  padding-top: 175px;
   width: 1680px;
   margin: auto;
   display: grid;

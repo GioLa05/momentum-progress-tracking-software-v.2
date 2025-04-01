@@ -6,12 +6,14 @@ import Image from "next/image";
 type Props = {
   imageSrc?: string;
   label: string;
+  isChecked?: boolean; // optional visual
+  onClick?: () => void; // ✅ added
 };
 
-const CheckboxBtn = ({ imageSrc, label }: Props) => {
+const CheckboxBtn = ({ imageSrc, label, isChecked, onClick }: Props) => {
   return (
-    <div className={styles.button}>
-      <Checkbox />
+    <div className={styles.button} onClick={onClick}> {/* ✅ handle click */}
+      <Checkbox checked={isChecked} />
       {imageSrc && <Image src={imageSrc} width={28} height={28} alt="icon" />}
       <p>{label}</p>
     </div>

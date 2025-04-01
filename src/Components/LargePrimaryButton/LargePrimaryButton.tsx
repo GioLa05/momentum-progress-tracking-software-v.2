@@ -3,10 +3,15 @@ import styles from "./LargePrimaryButton.module.css";
 
 type Props = {
   text: string;
+  onClick?: () => void;
 };
 
-const LargePrimaryButton = (props: Props) => {
-  return <div className={styles.button}>{props.text}</div>;
+const LargePrimaryButton = ({ text, onClick }: Props) => {
+  return (
+    <button className={styles.button} onClick={onClick}>
+      {text}
+    </button>
+  );
 };
 
 export default LargePrimaryButton;

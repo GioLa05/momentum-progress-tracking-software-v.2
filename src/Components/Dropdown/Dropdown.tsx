@@ -4,90 +4,170 @@ import React, { useState, useEffect } from "react";
 import DropdownBtn from "@/Components/DropdownBtn/DropdownBtn";
 import styles from "./Dropdown.module.css";
 import DropdownContent from "../DropdownContent/DropdownContent";
-import { API_URL, API_TOKEN } from "../../config/config"; // Assuming you have your API URL and Token in a config file
+import SelectedFilter from "@/Components/SelectedFilter/SelectedFilter";
+import { API_URL, API_TOKEN } from "../../config/config";
 
-const DropdownList = () => {
+const DropdownList = ({ onFilter }: { onFilter: (filters: any) => void }) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-
-  // State to store the options for each dropdown
   const [departments, setDepartments] = useState<string[]>([]);
   const [priorities, setPriorities] = useState<string[]>([]);
-  const [employees, setEmployees] = useState<any[]>([]); // State for employee data (with avatar, name, surname)
+  const [employees, setEmployees] = useState<any[]>([]);
 
-  // Fetch data for departments, priorities, and employees
+  const [appliedValues, setAppliedValues] = useState({
+    department: null as string | null,
+    priority: null as string | null,
+    employee: null as { id: number } | null,
+  });
+
+  const [tempValues, setTempValues] = useState({
+    department: null as string | null,
+    priority: null as string | null,
+    employee: null as { id: number } | null,
+  });
+
   useEffect(() => {
     const fetchDropdownData = async () => {
       try {
-        // Fetch departments
-        const departmentsResponse = await fetch(`${API_URL}/departments`, {
-          headers: {
-            Authorization: `Bearer ${API_TOKEN}`,
-          },
+        const depRes = await fetch(`${API_URL}/departments`, {
+          headers: { Authorization: `Bearer ${API_TOKEN}` },
         });
-        const departmentsData = await departmentsResponse.json();
-        setDepartments(departmentsData.map((item: any) => item.name)); // Assuming 'name' contains the department name
+        const departmentsData = await depRes.json();
+        setDepartments(departmentsData.map((d: any) => d.name));
 
-        // Fetch priorities
-        const prioritiesResponse = await fetch(`${API_URL}/priorities`, {
-          headers: {
-            Authorization: `Bearer ${API_TOKEN}`,
-          },
+        const priRes = await fetch(`${API_URL}/priorities`, {
+          headers: { Authorization: `Bearer ${API_TOKEN}` },
         });
-        const prioritiesData = await prioritiesResponse.json();
-        setPriorities(prioritiesData.map((item: any) => item.name)); // Assuming 'name' contains the priority name
+        const prioritiesData = await priRes.json();
+        setPriorities(prioritiesData.map((p: any) => p.name));
 
-        // Fetch employees (with avatar, name, and surname)
-        const employeesResponse = await fetch(`${API_URL}/employees`, {
-          headers: {
-            Authorization: `Bearer ${API_TOKEN}`,
-          },
+        const empRes = await fetch(`${API_URL}/employees`, {
+          headers: { Authorization: `Bearer ${API_TOKEN}` },
         });
-        const employeesData = await employeesResponse.json();
-        setEmployees(employeesData); // Store the full employee objects
-      } catch (error) {
-        console.error("Error fetching dropdown data:", error);
+        const employeesData = await empRes.json();
+        setEmployees(employeesData);
+      } catch (err) {
+        console.error("Dropdown fetch error:", err);
       }
     };
 
     fetchDropdownData();
-  }, []); // Empty dependency array ensures this runs only once on mount
+  }, []);
 
-  const handleDropdownClick = (index: number) => {
-    setActiveIndex((prev) => (prev === index ? null : index));
+  const handleChoose = () => {
+    console.log("👉 Selected values:", JSON.stringify(tempValues, null, 2));
+    setAppliedValues(tempValues);
+    onFilter({ ...tempValues });
+    setActiveIndex(null); // optional: close dropdown after choosing
+  };
+
+  const handleSelect = (value: any) => {
+    if (activeIndex === 0) {
+      setTempValues((prev) => ({
+        ...prev,
+        department: prev.department === value ? null : value.toString(),
+      }));
+    } else if (activeIndex === 1) {
+      setTempValues((prev) => ({
+        ...prev,
+        priority: prev.priority === value ? null : value.toString(),
+      }));
+    } else if (activeIndex === 2) {
+      setTempValues((prev) => ({
+        ...prev,
+        employee: prev.employee?.id === value.id ? null : { id: value.id },
+      }));
+    }
+  };
+
+  const selected =
+    activeIndex === 0
+      ? tempValues.department
+      : activeIndex === 1
+      ? tempValues.priority
+      : tempValues.employee;
+
+  const clearFilter = (key: "department" | "priority" | "employee") => {
+    const updated = { ...appliedValues, [key]: null };
+    setAppliedValues(updated);
+    setTempValues(updated);
+    onFilter(updated);
+  };
+
+  const clearAll = () => {
+    const cleared = {
+      department: null,
+      priority: null,
+      employee: null,
+    };
+    setAppliedValues(cleared);
+    setTempValues(cleared);
+    onFilter(cleared);
   };
 
   return (
     <div className={styles.main}>
       <div className={styles.top}>
-        {[
-          { label: "დეპარტამენტი", options: departments },
-          { label: "პრიორიტეტი", options: priorities },
-          { label: "თანამშრომელი", options: employees },
-        ].map((item, index) => (
+        {["დეპარტამენტი", "პრიორიტეტი", "თანამშრომელი"].map((label, index) => (
           <DropdownBtn
-            key={item.label}
-            text={item.label}
+            key={label}
+            text={label}
             isActive={activeIndex === index}
-            onClick={() => handleDropdownClick(index)}
+            onClick={() => setActiveIndex(index === activeIndex ? null : index)}
           />
         ))}
       </div>
 
       {activeIndex !== null && (
-        <DropdownContent
-          options={
-            activeIndex === 0
-              ? departments
-              : activeIndex === 1
-              ? priorities
-              : employees.map((employee: any) => ({
-                  avatar: employee.avatar,
-                  name: employee.name,
-                  surname: employee.surname,
-                }))
-          }
-        />
+        <div className={styles.dropdownOverlay}>
+          <DropdownContent
+            options={
+              activeIndex === 0
+                ? departments
+                : activeIndex === 1
+                ? priorities
+                : employees.map((e) => ({
+                    name: e.name,
+                    surname: e.surname,
+                    avatar: e.avatar,
+                    id: e.id,
+                  }))
+            }
+            selected={selected}
+            onSelect={handleSelect}
+            onChoose={handleChoose}
+          />
+        </div>
       )}
+
+      <div className={styles.filters}>
+        {appliedValues.department && (
+          <SelectedFilter
+            name={appliedValues.department}
+            onClear={() => clearFilter("department")}
+          />
+        )}
+        {appliedValues.priority && (
+          <SelectedFilter
+            name={appliedValues.priority}
+            onClear={() => clearFilter("priority")}
+          />
+        )}
+        {appliedValues.employee && (
+          <SelectedFilter
+            name={(() => {
+              const match = employees.find((e) => e.id === appliedValues.employee?.id);
+              return match ? `${match.name} ${match.surname}` : "";
+            })()}
+            onClear={() => clearFilter("employee")}
+          />
+        )}
+
+        {(appliedValues.department || appliedValues.priority || appliedValues.employee) && (
+          <button className={styles.clearAll} onClick={clearAll}>
+            გასუფთავება
+          </button>
+        )}
+      </div>
     </div>
   );
 };

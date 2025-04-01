@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import styles from "./DropdownContent.module.css";
 import LargePrimaryButton from "../LargePrimaryButton/LargePrimaryButton";
@@ -5,26 +7,39 @@ import CheckboxBtn from "../CheckboxBtn/CheckboxBtn";
 
 type Props = {
   options?: any[];
-  selected: string | null | any;
+  selected: any;
   onSelect: (value: any) => void;
+  onChoose: () => void;
 };
 
-const DropdownContent = ({ options = [], selected, onSelect }: Props) => {
+const DropdownContent = ({ options = [], selected, onSelect, onChoose }: Props) => {
   return (
     <div className={styles.content}>
       <div className={styles.top}>
-        {options.map((option, index) => (
-          <CheckboxBtn
-            key={index}
-            label={typeof option === "string" ? option : `${option.name} ${option.surname}`} // Render string for departments/priorities, and name/surname for employees
-            avatar={typeof option !== "string" ? option.avatar : undefined} // Only pass avatar if it's an employee object
-            isChecked={selected === option} // Check if this option is selected
-            onClick={() => onSelect(option)} // Set selected value
-          />
-        ))}
+        {options.map((option, index) => {
+          const isObject = typeof option === "object";
+          const label = isObject ? `${option.name} ${option.surname}` : option;
+          const avatar = isObject ? option.avatar : undefined;
+          const isChecked = isObject
+            ? selected?.id === option.id
+            : selected === option;
+
+          return (
+            <CheckboxBtn
+              key={index}
+              label={label}
+              avatar={avatar}
+              isChecked={isChecked}
+              onClick={() => {
+                console.log("👉 Selected in UI:", option);
+                onSelect(option);
+              }}
+            />
+          );
+        })}
       </div>
       <div className={styles.bottom}>
-        <LargePrimaryButton text="არჩევა" />
+        <LargePrimaryButton text="არჩევა" onClick={onChoose} />
       </div>
     </div>
   );
