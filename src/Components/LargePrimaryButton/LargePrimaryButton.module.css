@@ -1,17 +1,25 @@
 .button {
   width: 155px;
-  height: auto;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 20px;
   gap: 10px;
   padding: 8px 20px;
   border: none;
-  background-color: #8338EC;
+  background-color: #8338ec;
   text-align: center;
   color: white;
+  font-family: FiraGO;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
 }
 
 .button:hover {
-  background-color: #B588F4;
+  background-color: #b588f4;
   animation-timing-function: ease-out;
   animation-duration: 300ms;
 }

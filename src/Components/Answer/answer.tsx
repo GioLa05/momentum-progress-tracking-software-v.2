@@ -4,10 +4,10 @@ import Image from "next/image";
 import AnswerBtn from "../AnswerBtn/answerBtn";
 
 type Props = {
-  type: 'question' | 'answer';
-  name: string;
-  text: string;
-  imageSrc: string;
+  type?: 'question' | 'answer';
+  name?: string;
+  text?: string;
+  imageSrc?: string;
 };
 
 const Answer = (props: Props) => {

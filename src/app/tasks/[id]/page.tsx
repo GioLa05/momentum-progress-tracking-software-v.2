@@ -5,6 +5,8 @@ import RankButton from "@/Components/RankButton/RankButton";
 import Image from "next/image";
 import StatusButtonWrapper from "@/Components/StatusButtonWrapper/statusButtonWrapper";
 import NewStatusWithEmployee from "@/Components/NewStatusWithEmployee/NewStatusWithEmployee";
+import Comment from "@/Components/Comment/Comment";
+import Answer from "@/Components/Answer/answer";
 
 // Helper: Priority name to level
 const getPriorityLevel = (name: string): string => {
@@ -106,61 +108,75 @@ export default async function Page({
   const departmentStyle = departmentStylesMap[task.department.id];
 
   return (
-    <div>
-      <div className={styles.info}>
-        <div>
-          <div className={styles.levelPlusName}>
-            <div className={styles.levelPriority}>
-              <Level
-                priority={getPriorityLevel(task.priority.name)}
-                size="small"
-              />
-              <RankButton
-                color={departmentStyle.color}
-                text={departmentStyle.text}
+    <div className={styles.container}>
+      <div>
+        <div className={styles.info}>
+          <div>
+            <div className={styles.levelPlusName}>
+              <div className={styles.levelPriority}>
+                <Level
+                  priority={getPriorityLevel(task.priority.name)}
+                  size="small"
+                />
+                <RankButton
+                  color={departmentStyle.color}
+                  text={departmentStyle.text}
+                />
+              </div>
+              <p className={styles.h1}>{task.name}</p>
+            </div>
+            <p className={styles.description}>{task.description}</p>
+          </div>
+          <div>
+            <p className={styles.taskH1}>დავალების დეტალები</p>
+
+            <div className={styles.taskDetails}>
+              <div className={styles.detailsRight}>
+                <Image
+                  src={"/status.svg"}
+                  width={24}
+                  height={24}
+                  alt="status"
+                />
+                <p>სტატუსი</p>
+              </div>
+              <StatusButtonWrapper taskStatus={task.status} />
+            </div>
+
+            <div className={styles.taskDetails}>
+              <div className={styles.detailsRight}>
+                <Image src={"/user.svg"} width={24} height={24} alt="user" />
+                <p>თანამშრომელი</p>
+              </div>
+              <NewStatusWithEmployee
+                status={task.status}
+                employee={{
+                  ...task.employee,
+                  department: task.department,
+                }}
               />
             </div>
-            <p className={styles.h1}>{task.name}</p>
+
+            <div className={styles.taskDetails}>
+              <div className={styles.detailsRight}>
+                <Image
+                  src={"/calendar.svg"}
+                  width={24}
+                  height={24}
+                  alt="calendar"
+                />
+                <p>დავალების ვადა</p>
+              </div>
+              <p className={styles.formattedDate}>{formattedDate}</p>
+            </div>
           </div>
-          <p className={styles.description}>{task.description}</p>
         </div>
-        <div>
-          <p className={styles.taskH1}>დავალების დეტალები</p>
-
-          <div className={styles.taskDetails}>
-            <div className={styles.detailsRight}>
-              <Image src={"/status.svg"} width={24} height={24} alt="status" />
-              <p>სტატუსი</p>
-            </div>
-            <StatusButtonWrapper taskStatus={task.status} />
-          </div>
-
-          <div className={styles.taskDetails}>
-            <div className={styles.detailsRight}>
-              <Image src={"/user.svg"} width={24} height={24} alt="user" />
-              <p>თანამშრომელი</p>
-            </div>
-            <NewStatusWithEmployee
-              status={task.status}
-              employee={{
-                ...task.employee,
-                department: task.department,
-              }}
-            />
-          </div>
-
-          <div className={styles.taskDetails}>
-            <div className={styles.detailsRight}>
-              <Image
-                src={"/calendar.svg"}
-                width={24}
-                height={24}
-                alt="calendar"
-              />
-              <p>დავალების ვადა</p>
-            </div>
-            <p className={styles.formattedDate}>{formattedDate}</p>
-          </div>
+      </div>
+      <div className={styles.commentsContainer}>
+        <Comment />
+        <div className={styles.quantityContainer}>
+          <p>კომენტარები</p>
+          <div className={styles.commentNumber}>3</div>
         </div>
       </div>
     </div>

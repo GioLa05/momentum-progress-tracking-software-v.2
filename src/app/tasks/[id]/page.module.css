@@ -1,3 +1,12 @@
+.container {
+  width: 1680px;
+  display: grid;
+  grid-template-columns: 715px 741px;
+  justify-content: space-between;
+  margin: auto;
+  padding-top: 40px;
+}
+
 .levelPriority {
   display: flex;
   gap: 18px;
@@ -75,4 +84,47 @@
   line-height: 150%;
   letter-spacing: 0%;
   color: #0d0f10;
+}
+
+.commentsContainer {
+  width: 100%;
+  height: min-content;
+  padding: 40px 45px;
+  margin-top: 60px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 0.3px solid #ddd2ff;
+  background-color: #faf7fe;
+}
+
+.quantityContainer {
+  padding-top: 66px;
+  display: flex;
+  gap: 7px;
+  font-family: FiraGO;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: black;
+}
+
+.commentNumber {
+  width: auto;
+  height: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  gap: 10px;
+  padding: 10px;
+  background-color: #8338ec;
+  font-family: FiraGO;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: white;
 }
