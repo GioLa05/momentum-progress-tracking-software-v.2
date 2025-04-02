@@ -59,12 +59,36 @@ const getPriorityLevel = (name: string): string => {
 
 // Georgian months mapping
 const georgianMonths = [
-  "იანვარი", "თებერვალი", "მარტი", "აპრილი", "მაისი", "ივნისი",
-  "ივლისი", "აგვისტო", "სექტემბერი", "ოქტომბერი", "ნოემბერი", "დეკემბერი"
+  "იანვარი",
+  "თებერვალი",
+  "მარტი",
+  "აპრილი",
+  "მაისი",
+  "ივნისი",
+  "ივლისი",
+  "აგვისტო",
+  "სექტემბერი",
+  "ოქტომბერი",
+  "ნოემბერი",
+  "დეკემბერი",
 ];
 
 // Department ID → color/text mapping for RankButton
-const departmentStylesMap: Record<number, { text: string; color: "pink" | "orange" | "blue" | "yellow" | "green" | "purple" | "red" | "teal" }> = {
+const departmentStylesMap: Record<
+  number,
+  {
+    text: string;
+    color:
+      | "pink"
+      | "orange"
+      | "blue"
+      | "yellow"
+      | "green"
+      | "purple"
+      | "red"
+      | "teal";
+  }
+> = {
   1: { text: "ადმინისტრაცია", color: "teal" },
   2: { text: "ადამიანური რესურსები", color: "green" },
   3: { text: "ფინანსები", color: "purple" },
@@ -91,10 +115,7 @@ const Task = ({ task }: Props) => {
       {/* Top section: Priority level, department, and due date */}
       <div className={styles.top}>
         <div className={styles.topLeft}>
-          <Level
-            priority={getPriorityLevel(task.priority.name)}
-            size="small"
-          />
+          <Level priority={getPriorityLevel(task.priority.name)} size="small" />
           <RankButton
             color={departmentStyle.color}
             text={departmentStyle.text}
@@ -119,12 +140,7 @@ const Task = ({ task }: Props) => {
           alt="coworker"
         />
         <div className={styles.bottomRight}>
-          <Image
-            src={"comment.svg"}
-            width={22}
-            height={22}
-            alt="comment"
-          />
+          <Image src={"comment.svg"} width={22} height={22} alt="comment" />
           <p>0</p>
         </div>
       </div>
