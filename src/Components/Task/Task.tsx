@@ -38,9 +38,13 @@ type TaskData = {
   };
 };
 
-// Define the Props type for the Task component
 type Props = {
   task: TaskData;
+  borderColor: string;
+  comments?: number;
+  date?: string;
+  title?: string;
+  description?: string;
 };
 
 // Map Georgian priority names to levels
@@ -73,7 +77,6 @@ const georgianMonths = [
   "დეკემბერი",
 ];
 
-// Department ID → color/text mapping for RankButton
 const departmentStylesMap: Record<
   number,
   {
@@ -99,8 +102,7 @@ const departmentStylesMap: Record<
   8: { text: "დიზაინი", color: "pink" },
 };
 
-// Task component
-const Task = ({ task }: Props) => {
+const Task = ({ task, borderColor, comments = 0 }: Props) => {
   const date = new Date(task.due_date);
   const day = date.getDate();
   const monthIndex = date.getMonth();
@@ -111,7 +113,11 @@ const Task = ({ task }: Props) => {
   const departmentStyle = departmentStylesMap[task.department.id];
 
   return (
-    <Link href={`/tasks/${task.id}`} className={styles.button}>
+    <Link
+      href={`/tasks/${task.id}`}
+      className={styles.button}
+      style={{ border: `1px solid ${borderColor}` }} // ✅ full border color here
+    >
       {/* Top section: Priority level, department, and due date */}
       <div className={styles.top}>
         <div className={styles.topLeft}>
@@ -141,7 +147,7 @@ const Task = ({ task }: Props) => {
         />
         <div className={styles.bottomRight}>
           <Image src={"comment.svg"} width={22} height={22} alt="comment" />
-          <p>0</p>
+          <p>{comments}</p>
         </div>
       </div>
     </Link>
