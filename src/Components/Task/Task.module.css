@@ -10,6 +10,8 @@
   background-color: white;
   border: 1px solid #ced4da;
   padding: 20px;
+  text-decoration: none;
+  color: inherit;
 }
 .top {
   display: flex;

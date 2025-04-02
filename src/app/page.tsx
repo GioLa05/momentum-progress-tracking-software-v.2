@@ -4,7 +4,6 @@ import React, { useState, useEffect, useMemo } from "react";
 import styles from "./page.module.css";
 import DropdownList from "@/Components/Dropdown/Dropdown";
 import Progress from "@/Components/Progress/progress";
-import SelectedFilter from "@/Components/SelectedFilter/SelectedFilter";
 import { API_URL, API_TOKEN } from "@/config/config";
 
 export default function Home() {

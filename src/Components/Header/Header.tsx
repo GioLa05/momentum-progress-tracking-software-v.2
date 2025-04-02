@@ -6,6 +6,7 @@ import Image from "next/image";
 import CreateAnEmployee from "../CreateAnEmployee/createAnEmployee";
 import CreateNewTask from "../CreateNewTask/CreateNewTask";
 import AddCoworkerContent from "../AddCoworkerContent/AddCoworkerContent"; // Import AddCoworkerContent
+import Link from "next/link";
 
 type Props = {};
 
@@ -28,7 +29,9 @@ const Header = (props: Props) => {
         <AddCoworkerContent close={closeAddCoworkerContent} />
       )}{" "}
       {/* Pass close function */}
-      <Image src={"/Logo.png"} width={210} height={38} alt="logo" />
+      <Link href="/">
+        <Image src={"/Logo.png"} width={210} height={38} alt="logo" priority />
+      </Link>
       <div className={styles.headerButtons}>
         <CreateAnEmployee
           text="თანამშრომლის შექმნა"

@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import Link from "next/link";
 import styles from "./Task.module.css";
 import Level from "../Level/Level";
 import RankButton from "../RankButton/RankButton";
@@ -9,7 +12,7 @@ type TaskData = {
   id: number;
   name: string;
   description: string;
-  due_date: string; // ISO format, e.g., "2025-12-31T00:00:00.000000Z"
+  due_date: string;
   department: {
     id: number;
     name: string;
@@ -18,7 +21,7 @@ type TaskData = {
     id: number;
     name: string;
     surname: string;
-    avatar: string; // URL to the employee's avatar image
+    avatar: string;
     department: {
       id: number;
       name: string;
@@ -30,7 +33,7 @@ type TaskData = {
   };
   priority: {
     id: number;
-    name: string; // Priority name in Georgian, e.g., "დაბალი"
+    name: string;
     icon: string;
   };
 };
@@ -40,7 +43,7 @@ type Props = {
   task: TaskData;
 };
 
-// Function to map Georgian priority names to English levels for the Level component
+// Map Georgian priority names to levels
 const getPriorityLevel = (name: string): string => {
   switch (name) {
     case "დაბალი":
@@ -84,7 +87,7 @@ const Task = ({ task }: Props) => {
   const departmentStyle = departmentStylesMap[task.department.id];
 
   return (
-    <button className={styles.button}>
+    <Link href={`/tasks/${task.id}`} className={styles.button}>
       {/* Top section: Priority level, department, and due date */}
       <div className={styles.top}>
         <div className={styles.topLeft}>
@@ -125,7 +128,7 @@ const Task = ({ task }: Props) => {
           <p>0</p>
         </div>
       </div>
-    </button>
+    </Link>
   );
 };
 
