@@ -1,4 +1,7 @@
 .main {
+  width: 1680px;
+  padding-top: 26px;
+  margin: auto;
   position: relative; /* აუცილებელია overlay-სთვის */
   display: flex;
   flex-direction: column;
@@ -41,7 +44,7 @@
 
 .dropdownOverlay {
   position: absolute;
-  top: 60px; /* დაარეგულირე შენი დიზაინის მიხედვით */
+  top: 95px;
   left: 0;
   width: 100%;
   z-index: 999;

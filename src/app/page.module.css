@@ -2,6 +2,10 @@
 }
 
 .h1 {
+  max-width: 1920px;
+  height: 100px;
+  margin: auto;
+  justify-content: flex-start;
   font-family: FiraGO;
   font-weight: 600;
   font-size: 34px;
@@ -13,13 +17,11 @@
 }
 
 .dropdownList {
-  position: absolute;
-  top: 233px;
-  left: 120px;
+  z-index: 999;
 }
 
 .progressGroup {
-  padding-top: 175px;
+  padding-top: 24px;
   width: 1680px;
   margin: auto;
   display: grid;
