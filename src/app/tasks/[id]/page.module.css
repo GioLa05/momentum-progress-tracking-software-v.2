@@ -111,6 +111,10 @@
   color: black;
 }
 
+.withPadding {
+  padding-bottom: 40px;
+}
+
 .commentNumber {
   width: auto;
   height: 22px;

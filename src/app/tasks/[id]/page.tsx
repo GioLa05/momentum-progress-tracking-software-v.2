@@ -82,6 +82,7 @@ export default async function Page({
 }) {
   const { id } = await paramsPromise;
 
+  // Fetch task
   const res = await fetch(`${API_URL}/tasks/${id}`, {
     headers: {
       Authorization: `Bearer ${API_TOKEN}`,
@@ -94,6 +95,20 @@ export default async function Page({
   }
 
   const task: TaskData = await res.json();
+
+  // Fetch comments
+  const commentRes = await fetch(`${API_URL}/tasks/${id}/comments`, {
+    headers: {
+      Authorization: `Bearer ${API_TOKEN}`,
+    },
+    cache: "no-store",
+  });
+
+  let comments: any[] = [];
+
+  if (commentRes.ok) {
+    comments = await commentRes.json();
+  }
 
   // Format date like: ორშ - 02/2/2025
   const date = new Date(task.due_date);
@@ -172,12 +187,22 @@ export default async function Page({
           </div>
         </div>
       </div>
+
       <div className={styles.commentsContainer}>
         <Comment />
-        <div className={styles.quantityContainer}>
+        <div
+          className={`${styles.quantityContainer} ${
+            comments.length > 0 ? styles.withPadding : ""
+          }`}
+        >
           <p>კომენტარები</p>
-          <div className={styles.commentNumber}>3</div>
+          <div className={styles.commentNumber}>{comments.length}</div>
         </div>
+
+        {comments.length > 0 &&
+          comments.map((comment, index) => (
+            <Answer key={index} type="question" comment={comment} />
+          ))}
       </div>
     </div>
   );
