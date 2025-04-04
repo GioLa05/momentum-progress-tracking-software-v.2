@@ -1,21 +1,22 @@
+"use client";
 import React from "react";
-import styles from "./DatePickerNative.module.css";
+import styles from "./DatePicker.module.css";
 
 interface CalendarActionsProps {
   onCancel: () => void;
-  onOk: () => void;
+  onConfirm: () => void;
 }
 
 const CalendarActions: React.FC<CalendarActionsProps> = ({
   onCancel,
-  onOk,
+  onConfirm,
 }) => {
   return (
-    <div className={styles.actionBar2}>
-      <button className={styles.effacer} onClick={onCancel}>
+    <div className={styles.actionBar}>
+      <button className={styles.cancelButton} onClick={onCancel}>
         Cancel
       </button>
-      <button className={styles.aujourdhui} onClick={onOk}>
+      <button className={styles.okButton} onClick={onConfirm}>
         OK
       </button>
     </div>

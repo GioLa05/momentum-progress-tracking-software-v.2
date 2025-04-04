@@ -1,14 +1,12 @@
 import { API_URL, API_TOKEN } from "@/config/config";
 import styles from "./page.module.css";
+import ClientPage from "./ClientPage";
 import Level from "@/Components/Level/Level";
 import RankButton from "@/Components/RankButton/RankButton";
 import Image from "next/image";
 import StatusButtonWrapper from "@/Components/StatusButtonWrapper/statusButtonWrapper";
 import NewStatusWithEmployee from "@/Components/NewStatusWithEmployee/NewStatusWithEmployee";
-import Comment from "@/Components/Comment/Comment";
-import Answer from "@/Components/Answer/answer";
 
-// Helper: Priority name to level
 const getPriorityLevel = (name: string): string => {
   switch (name) {
     case "დაბალი":
@@ -22,22 +20,7 @@ const getPriorityLevel = (name: string): string => {
   }
 };
 
-// Helper: Department styling map
-const departmentStylesMap: Record<
-  number,
-  {
-    text: string;
-    color:
-      | "pink"
-      | "orange"
-      | "blue"
-      | "yellow"
-      | "green"
-      | "purple"
-      | "red"
-      | "teal";
-  }
-> = {
+const departmentStylesMap = {
   1: { text: "ადმინისტრაცია", color: "teal" },
   2: { text: "ადამიანური რესურსები", color: "green" },
   3: { text: "ფინანსები", color: "purple" },
@@ -48,41 +31,9 @@ const departmentStylesMap: Record<
   8: { text: "დიზაინი", color: "pink" },
 };
 
-// Task type
-type TaskData = {
-  id: number;
-  name: string;
-  description: string;
-  due_date: string;
-  status: {
-    id: number;
-    name: string;
-  };
-  department: {
-    id: number;
-    name: string;
-  };
-  employee: {
-    id: number;
-    name: string;
-    surname: string;
-    avatar: string;
-  };
-  priority: {
-    id: number;
-    name: string;
-    icon: string;
-  };
-};
-
-export default async function Page({
-  params: paramsPromise,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function Page({ params: paramsPromise }: { params: Promise<{ id: string }> }) {
   const { id } = await paramsPromise;
 
-  // Fetch task
   const res = await fetch(`${API_URL}/tasks/${id}`, {
     headers: {
       Authorization: `Bearer ${API_TOKEN}`,
@@ -94,32 +45,11 @@ export default async function Page({
     return <div>დავალება ვერ მოიძებნა</div>;
   }
 
-  const task: TaskData = await res.json();
+  const task = await res.json();
 
-  // Fetch comments
-  const commentRes = await fetch(`${API_URL}/tasks/${id}/comments`, {
-    headers: {
-      Authorization: `Bearer ${API_TOKEN}`,
-    },
-    cache: "no-store",
-  });
-
-  let comments: any[] = [];
-
-  if (commentRes.ok) {
-    comments = await commentRes.json();
-  }
-
-  // Format date like: ორშ - 02/2/2025
   const date = new Date(task.due_date);
-  const weekday = new Intl.DateTimeFormat("ka-GE", { weekday: "short" }).format(
-    date
-  );
-  const formattedDate = `${weekday} - ${date
-    .getDate()
-    .toString()
-    .padStart(2, "0")}/${date.getMonth() + 1}/${date.getFullYear()}`;
-
+  const weekday = new Intl.DateTimeFormat("ka-GE", { weekday: "short" }).format(date);
+  const formattedDate = `${weekday} - ${date.getDate().toString().padStart(2, "0")}/${date.getMonth() + 1}/${date.getFullYear()}`;
   const departmentStyle = departmentStylesMap[task.department.id];
 
   return (
@@ -142,17 +72,12 @@ export default async function Page({
             </div>
             <p className={styles.description}>{task.description}</p>
           </div>
+
           <div>
             <p className={styles.taskH1}>დავალების დეტალები</p>
-
             <div className={styles.taskDetails}>
               <div className={styles.detailsRight}>
-                <Image
-                  src={"/status.svg"}
-                  width={24}
-                  height={24}
-                  alt="status"
-                />
+                <Image src={"/status.svg"} width={24} height={24} alt="status" />
                 <p>სტატუსი</p>
               </div>
               <StatusButtonWrapper taskStatus={task.status} />
@@ -174,12 +99,7 @@ export default async function Page({
 
             <div className={styles.taskDetails}>
               <div className={styles.detailsRight}>
-                <Image
-                  src={"/calendar.svg"}
-                  width={24}
-                  height={24}
-                  alt="calendar"
-                />
+                <Image src={"/calendar.svg"} width={24} height={24} alt="calendar" />
                 <p>დავალების ვადა</p>
               </div>
               <p className={styles.formattedDate}>{formattedDate}</p>
@@ -188,22 +108,8 @@ export default async function Page({
         </div>
       </div>
 
-      <div className={styles.commentsContainer}>
-        <Comment />
-        <div
-          className={`${styles.quantityContainer} ${
-            comments.length > 0 ? styles.withPadding : ""
-          }`}
-        >
-          <p>კომენტარები</p>
-          <div className={styles.commentNumber}>{comments.length}</div>
-        </div>
-
-        {comments.length > 0 &&
-          comments.map((comment, index) => (
-            <Answer key={index} type="question" comment={comment} />
-          ))}
-      </div>
+      {/* Comments system */}
+      <ClientPage task={task} />
     </div>
   );
 }
