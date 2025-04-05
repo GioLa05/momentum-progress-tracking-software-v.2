@@ -1,3 +1,4 @@
+// Header.tsx
 "use client";
 
 import React, { useState } from "react";
@@ -5,20 +6,18 @@ import styles from "./Header.module.css";
 import Image from "next/image";
 import CreateAnEmployee from "../CreateAnEmployee/createAnEmployee";
 import CreateNewTask from "../CreateNewTask/CreateNewTask";
-import AddCoworkerContent from "../AddCoworkerContent/AddCoworkerContent"; // Import AddCoworkerContent
+import AddCoworkerContent from "../AddCoworkerContent/AddCoworkerContent";
 import Link from "next/link";
+import { useEmployeeContext } from "@/app/api/employee-context/EmployeeContext";
 
-type Props = {};
-
-const Header = (props: Props) => {
+const Header = () => {
   const [showAddCoworkerContent, setShowAddCoworkerContent] = useState(false);
+  const { refreshEmployees } = useEmployeeContext();
 
-  // Handler to show AddCoworkerContent when CreateAnEmployee is clicked
   const handleCreateEmployeeClick = () => {
     setShowAddCoworkerContent(true);
   };
 
-  // Close AddCoworkerContent
   const closeAddCoworkerContent = () => {
     setShowAddCoworkerContent(false);
   };
@@ -26,9 +25,11 @@ const Header = (props: Props) => {
   return (
     <div className={styles.container}>
       {showAddCoworkerContent && (
-        <AddCoworkerContent close={closeAddCoworkerContent} />
-      )}{" "}
-      {/* Pass close function */}
+        <AddCoworkerContent
+          close={closeAddCoworkerContent}
+          onEmployeeAdded={refreshEmployees}
+        />
+      )}
       <Link href="/">
         <Image src={"/Logo.png"} width={210} height={38} alt="logo" priority />
       </Link>
@@ -36,8 +37,7 @@ const Header = (props: Props) => {
         <CreateAnEmployee
           text="თანამშრომლის შექმნა"
           onClick={handleCreateEmployeeClick}
-        />{" "}
-        {/* Pass handler */}
+        />
         <CreateNewTask showImage={true} text="შექმენი ახალი დავალება" />
       </div>
     </div>

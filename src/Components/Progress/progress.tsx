@@ -1,17 +1,34 @@
-// Progress.tsx
 "use client";
 
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styles from "./progress.module.css";
 import Task from "../Task/Task";
+import { API_URL, API_TOKEN } from "@/config/config";
 
-// Define prop types
 type Props = {
   text: "დასაწყები" | "პროგრესში" | "მზად ტესტირებისთვის" | "დასრულებული";
   tasks: any[];
 };
 
-// Helper function to return status-specific color and class
+const fetchCommentCount = async (taskId: number): Promise<number> => {
+  try {
+    const res = await fetch(`${API_URL}/tasks/${taskId}/comments`, {
+      headers: {
+        Authorization: `Bearer ${API_TOKEN}`,
+      },
+      cache: "no-store",
+    });
+
+    if (!res.ok) return 0;
+
+    const data = await res.json();
+    return data.length;
+  } catch (err) {
+    console.error("Error fetching comment count:", err);
+    return 0;
+  }
+};
+
 const getColorInfo = (text: Props["text"]) => {
   switch (text) {
     case "დასაწყები":
@@ -29,8 +46,32 @@ const getColorInfo = (text: Props["text"]) => {
 
 const Progress = ({ text, tasks }: Props) => {
   const { className, color } = getColorInfo(text);
+  const [commentsCount, setCommentsCount] = useState<Record<number, number>>({});
 
-  const filteredTasks = tasks.filter((task) => task.status?.name === text);
+  // ✅ Memoized filtered tasks — stable between renders
+  const filteredTasks = useMemo(() => {
+    return tasks.filter((task) => task.status?.name === text);
+  }, [tasks, text]);
+
+  // ✅ Runs only when filteredTasks change (once when data loads)
+  useEffect(() => {
+    if (filteredTasks.length === 0) return;
+
+    const fetchAllComments = async () => {
+      const counts: Record<number, number> = {};
+
+      await Promise.all(
+        filteredTasks.map(async (task) => {
+          const count = await fetchCommentCount(task.id);
+          counts[task.id] = count;
+        })
+      );
+
+      setCommentsCount(counts);
+    };
+
+    fetchAllComments();
+  }, [filteredTasks]);
 
   return (
     <div className={styles.container}>
@@ -42,10 +83,7 @@ const Progress = ({ text, tasks }: Props) => {
             key={task.id}
             task={task}
             borderColor={color}
-            comments={8}
-            date={task.due_date}
-            title={task.name}
-            description={task.description}
+            comments={commentsCount[task.id] ?? 0}
           />
         ))
       ) : (

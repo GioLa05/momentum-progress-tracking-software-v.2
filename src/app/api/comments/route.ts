@@ -13,7 +13,7 @@ export async function POST(req: Request) {
       },
       body: JSON.stringify({
         text,
-        parent_id: parentId || undefined, // ✅ snake_case as required by backend
+        parent_id: parentId || undefined,
       }),
     });
 

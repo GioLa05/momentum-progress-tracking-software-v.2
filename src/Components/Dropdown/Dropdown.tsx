@@ -6,12 +6,15 @@ import styles from "./Dropdown.module.css";
 import DropdownContent from "../DropdownContent/DropdownContent";
 import SelectedFilter from "@/Components/SelectedFilter/SelectedFilter";
 import { API_URL, API_TOKEN } from "../../config/config";
+import { useEmployeeContext } from "@/app/api/employee-context/EmployeeContext"; // 👈 context import
 
 const DropdownList = ({ onFilter }: { onFilter: (filters: any) => void }) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [departments, setDepartments] = useState<string[]>([]);
   const [priorities, setPriorities] = useState<string[]>([]);
   const [employees, setEmployees] = useState<any[]>([]);
+
+  const { refreshTrigger } = useEmployeeContext(); // 👈 get context trigger
 
   const [appliedValues, setAppliedValues] = useState({
     department: null as string | null,
@@ -45,13 +48,14 @@ const DropdownList = ({ onFilter }: { onFilter: (filters: any) => void }) => {
         });
         const employeesData = await empRes.json();
         setEmployees(employeesData);
+        console.log("👤 DropdownList employees updated:", employeesData.length);
       } catch (err) {
         console.error("Dropdown fetch error:", err);
       }
     };
 
     fetchDropdownData();
-  }, []);
+  }, [refreshTrigger]); // 👈 re-fetch when refreshTrigger updates
 
   const handleChoose = () => {
     console.log("👉 Selected values:", JSON.stringify(tempValues, null, 2));

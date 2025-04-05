@@ -54,7 +54,9 @@
 
 .nameSurname {
   width: 813px;
-  display: flex;
+  text-align: left;
+  display: grid;
+  grid-template-columns: 384px 384px;
   justify-content: space-between;
 }
 
