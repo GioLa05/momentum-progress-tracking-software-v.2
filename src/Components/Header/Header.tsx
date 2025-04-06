@@ -1,18 +1,19 @@
-// Header.tsx
 "use client";
 
 import React, { useState } from "react";
 import styles from "./Header.module.css";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import CreateAnEmployee from "../CreateAnEmployee/createAnEmployee";
 import CreateNewTask from "../CreateNewTask/CreateNewTask";
 import AddCoworkerContent from "../AddCoworkerContent/AddCoworkerContent";
-import Link from "next/link";
 import { useEmployeeContext } from "@/app/api/employee-context/EmployeeContext";
 
 const Header = () => {
   const [showAddCoworkerContent, setShowAddCoworkerContent] = useState(false);
   const { refreshEmployees } = useEmployeeContext();
+  const router = useRouter();
 
   const handleCreateEmployeeClick = () => {
     setShowAddCoworkerContent(true);
@@ -20,6 +21,10 @@ const Header = () => {
 
   const closeAddCoworkerContent = () => {
     setShowAddCoworkerContent(false);
+  };
+
+  const handleCreateNewTaskClick = () => {
+    router.push("/newTaskPage");
   };
 
   return (
@@ -38,7 +43,11 @@ const Header = () => {
           text="თანამშრომლის შექმნა"
           onClick={handleCreateEmployeeClick}
         />
-        <CreateNewTask showImage={true} text="შექმენი ახალი დავალება" />
+        <CreateNewTask
+          showImage={true}
+          text="შექმენი ახალი დავალება"
+          onClick={handleCreateNewTaskClick}
+        />
       </div>
     </div>
   );

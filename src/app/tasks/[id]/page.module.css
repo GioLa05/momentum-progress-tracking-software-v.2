@@ -7,6 +7,18 @@
   padding-top: 40px;
 }
 
+/* ✅ Required for center-on-close behavior */
+.centerContainer {
+  justify-content: center;
+}
+
+.taskDetailsWrapper {
+  display: flex;
+  justify-content: space-between; /* default layout */
+}
+
+/* other classes... (you already have these, keeping for completeness) */
+
 .levelPriority {
   display: flex;
   gap: 18px;
@@ -59,10 +71,11 @@
 
 .taskDetails {
   width: 493px;
-  height: 70px;
   display: grid;
   grid-template-columns: 234px 1fr;
-  align-items: center;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: 70px;
 }
 
 .detailsRight {
@@ -72,9 +85,16 @@
   font-family: FiraGO;
   font-weight: 400;
   font-size: 16px;
-  line-height: 150%;
-  letter-spacing: 0%;
   color: #474747;
+}
+
+.centeredTaskDetails {
+  width: 493px;
+  display: grid;
+  grid-template-columns: 234px 1fr;
+  align-items: center;
+  gap: 12px;
+  min-height: 70px;
 }
 
 .formattedDate {
@@ -86,6 +106,7 @@
   color: #0d0f10;
 }
 
+/* Comments styling (unchanged) */
 .commentsContainer {
   width: 100%;
   height: min-content;

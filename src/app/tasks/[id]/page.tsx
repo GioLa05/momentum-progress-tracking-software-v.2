@@ -4,8 +4,8 @@ import ClientPage from "./ClientPage";
 import Level from "@/Components/Level/Level";
 import RankButton from "@/Components/RankButton/RankButton";
 import Image from "next/image";
-import StatusButtonWrapper from "@/Components/StatusButtonWrapper/statusButtonWrapper";
 import NewStatusWithEmployee from "@/Components/NewStatusWithEmployee/NewStatusWithEmployee";
+import StatusDropdownClient from "./StatusDropdownClient.tsx"; // 👈 NEW
 
 const getPriorityLevel = (name: string): string => {
   switch (name) {
@@ -75,15 +75,12 @@ export default async function Page({ params: paramsPromise }: { params: Promise<
 
           <div>
             <p className={styles.taskH1}>დავალების დეტალები</p>
-            <div className={styles.taskDetails}>
-              <div className={styles.detailsRight}>
-                <Image src={"/status.svg"} width={24} height={24} alt="status" />
-                <p>სტატუსი</p>
-              </div>
-              <StatusButtonWrapper taskStatus={task.status} />
-            </div>
 
-            <div className={styles.taskDetails}>
+            {/* სტატუსი */}
+            <StatusDropdownClient status={task.status} />
+
+            {/* თანამშრომელი */}
+            <div className={styles.centeredTaskDetails}>
               <div className={styles.detailsRight}>
                 <Image src={"/user.svg"} width={24} height={24} alt="user" />
                 <p>თანამშრომელი</p>
@@ -97,7 +94,8 @@ export default async function Page({ params: paramsPromise }: { params: Promise<
               />
             </div>
 
-            <div className={styles.taskDetails}>
+            {/* ვადა */}
+            <div className={styles.centeredTaskDetails}>
               <div className={styles.detailsRight}>
                 <Image src={"/calendar.svg"} width={24} height={24} alt="calendar" />
                 <p>დავალების ვადა</p>
@@ -108,7 +106,6 @@ export default async function Page({ params: paramsPromise }: { params: Promise<
         </div>
       </div>
 
-      {/* Comments system */}
       <ClientPage task={task} />
     </div>
   );

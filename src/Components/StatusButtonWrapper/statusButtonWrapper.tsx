@@ -1,33 +1,54 @@
-// ✅ StatusButtonWrapper.tsx (Client Component)
 "use client";
 
 import { useState } from "react";
-import StatusButton from "@/Components/StatusButton/statusButton";
+import StatusButtonStyled from "@/Components/StatusButton/statusButton";
 
-// Status type definition
 export type Status = {
   id: number;
   name: string;
 };
 
-// Props for wrapper
 type Props = {
   taskStatus: Status;
+  onOpenChange?: (isOpen: boolean) => void; // 👈 new prop
 };
 
-const StatusButtonWrapper = ({ taskStatus }: Props) => {
+const StatusButtonWrapper = ({ taskStatus, onOpenChange }: Props) => {
   const [selectedStatus, setSelectedStatus] = useState<Status | null>(taskStatus);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleDropdownToggle = () => {
+    const newState = !isOpen;
+    setIsOpen(newState);
+    onOpenChange?.(newState); // 👈 notify parent
+  };
 
   return (
-    <StatusButton
-      label="სტატუსი*"
-      defaultValue={selectedStatus}
-      onSelectChange={(status) => {
-        console.log("ახალი სტატუსი არჩეულია:", status);
-        setSelectedStatus(status);
-      }}
-    />
+    <div onClick={handleDropdownToggle}>
+      <StatusButtonStyled
+        defaultValue={selectedStatus}
+        showLabel={false}
+        formik={{
+          setFieldValue: (_: string, value: number) => {
+            setSelectedStatus({ id: value, name: getStatusNameById(value) });
+          },
+        }}
+      />
+    </div>
   );
+};
+
+const getStatusNameById = (id: number): string => {
+  switch (id) {
+    case 1:
+      return "დაგეგმილი";
+    case 2:
+      return "პროცესში";
+    case 3:
+      return "დასრულებული";
+    default:
+      return "უცნობი";
+  }
 };
 
 export default StatusButtonWrapper;

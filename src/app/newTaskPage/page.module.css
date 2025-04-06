@@ -1,0 +1,35 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  width: 1684px;
+  margin: auto;
+  padding-top: 40px;
+  padding-bottom: 30px;
+  font-family: FiraGO;
+  font-weight: 600;
+  font-size: 34px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #212529;
+}
+
+.container {
+  width: 1684px;
+  height: 804px;
+  border-radius: 4px;
+  border: 0.3px solid #ddd2ff;
+  background-color: #fbf9ffa6;
+  padding: 65px 0 65px 55px;
+}
+
+.formContainer {
+    width: 550px;
+    display: flex;
+    flex-direction: column;
+    gap: 55px;
+}
