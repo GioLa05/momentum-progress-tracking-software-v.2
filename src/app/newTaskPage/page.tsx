@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import styles from "./page.module.css";
@@ -8,21 +8,33 @@ import { TaskNameInput } from "@/Components/TaskNameInput/TaskNameInput";
 import { TaskDescriptionInput } from "@/Components/TaskDescriptionInput/TaskDescriptionInput";
 import PriorityButton from "@/Components/PriorityButton/PriorityButton.tsx";
 import StatusButtonStyled from "@/Components/StatusButton/statusButton";
+import DepartmentDropdown from "@/Components/DepartmentDropdown/DepartmentDropdown";
+import EmployeeDropdown from "@/Components/EmployeeDropdown/EmployeeDropdown";
+import DatePicker from "@/Components/Calendar/DatePicker";
+import CreateNewTask from "@/Components/CreateNewTask/CreateNewTask";
 
 const API_URL = "https://momentum.redberryinternship.ge/api/tasks";
 const API_TOKEN = "9e8fd40a-1bc6-42ab-9deb-26ff41262121";
 
 const NewTaskPage = () => {
+  const [selectedDepartmentId, setSelectedDepartmentId] = useState<
+    number | null
+  >(null);
+
   const initialValues = {
     name: "",
     description: "",
-    priority_id: null,
+    priority_id: null as number | null,
+    employee_id: null as number | null,
+    department_id: null as number | null,
   };
 
   const validationSchema = Yup.object({
     name: Yup.string().min(2).max(255).required("სავალდებულოა"),
     description: Yup.string().min(2).max(1000).required("სავალდებულოა"),
     priority_id: Yup.number().required("აირჩიე პრიორიტეტი"),
+    employee_id: Yup.number().required("აირჩიე თანამშრომელი"),
+    department_id: Yup.number().required("აირჩიე დეპარტამენტი"),
   });
 
   const handleSubmit = async (values: any, { resetForm }: any) => {
@@ -38,7 +50,7 @@ const NewTaskPage = () => {
           description: values.description,
           due_date: "2025-12-31",
           status_id: 1,
-          employee_id: 1,
+          employee_id: values.employee_id,
           priority_id: values.priority_id,
         }),
       });
@@ -64,11 +76,53 @@ const NewTaskPage = () => {
         >
           {(formik) => (
             <Form className={styles.formContainer}>
-              <TaskNameInput formik={formik} />
-              <TaskDescriptionInput formik={formik} />
-              <div className={styles.priorityStatusGrouped}>
-                <PriorityButton formik={formik} />
-                <StatusButtonStyled formik={formik} />
+              <div className={styles.inputGrid}>
+                <div className={styles.leftCol}>
+                  <TaskNameInput formik={formik} />
+                  <TaskDescriptionInput formik={formik} />
+                  <div className={styles.priorityStatusGrouped}>
+                    <PriorityButton formik={formik} />
+                    <StatusButtonStyled formik={formik} />
+                  </div>
+                </div>
+
+                <div className={styles.rightCol}>
+                  <div className={styles.departmentDropdown}>
+                    <DepartmentDropdown
+                      formik={formik}
+                      width={550}
+                      onSelect={(id: number) => {
+                        console.log("📌 Selected department ID:", id);
+                        setSelectedDepartmentId(id);
+                        formik.setFieldValue("employee_id", null);
+                      }}
+                    />
+                  </div>
+
+                  <EmployeeDropdown
+                    formik={formik}
+                    width={550}
+                    selectedDepartmentId={selectedDepartmentId}
+                  />
+                  <div className={styles.datePicker}>
+                    <DatePicker
+                      formik={formik}
+                      width={550}
+                      label="დავალების ვადა"
+                      placeholder="აირჩიეთ თარიღი"
+                    />
+                  </div>
+
+                  <div className={styles.createNewTask}>
+                    <CreateNewTask
+                      formik={formik}
+                      width={550} // still passed but overridden in style
+                      label="დავალების შექმნა"
+                      placeholder="შექმნა"
+                      variant="form" // 👈 tells the component to switch to "form mode"
+                    />
+                  </div>
+                </div>
               </div>
             </Form>
           )}

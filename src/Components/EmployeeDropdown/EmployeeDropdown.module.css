@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding-top: 33px;
 }
 
 .label {
@@ -40,6 +41,8 @@
   color: #0d0f10;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .inputIcon {
@@ -83,21 +86,24 @@
   letter-spacing: 0%;
 }
 
-.departmentItem {
+.item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
   font-family: FiraGO;
   font-weight: 300;
   font-size: 14px;
   line-height: 100%;
   letter-spacing: 0%;
   background-color: white;
-  padding: 14px;
   color: #0d0f10;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
-.departmentItem:hover {
-  color: #8338ec;
+.item:hover {
+  background-color: #f8f9fa;
 }
 
 .placeholder {
@@ -107,4 +113,19 @@
   line-height: 100%;
   letter-spacing: 0%;
   color: #0d0f10;
+}
+
+.avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatarMini {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: auto;
 }

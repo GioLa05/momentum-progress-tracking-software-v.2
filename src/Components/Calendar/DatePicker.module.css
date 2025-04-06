@@ -1,10 +1,12 @@
 .datepicker {
   max-width: 320px;
 }
+
 .container {
   width: 100%;
   max-width: 318px;
 }
+
 .label {
   color: #343a40;
   white-space: nowrap;
@@ -19,14 +21,17 @@
   font-weight: 400;
   line-height: 100%;
 }
+
 .inputWrapper {
   width: 100%;
 }
+
 .inputField {
-  width: 272px;
+  width: 318px;
+  height: 45px;
   margin-top: 5px;
-  border: 1px solid var(--purple-accent-color, #8338ec);
-  color: #adb5bd;
+  border: 1px solid #ced4da; /* default */
+  color: #adb5bd; /* default placeholder color */
   white-space: nowrap;
   letter-spacing: -0.18px;
   background-color: #fff;
@@ -41,6 +46,11 @@
   display: flex;
   overflow: hidden;
 }
+
+.inputFieldActive {
+  border: 1px solid var(--purple-accent-color, #8338ec);
+}
+
 .calendarIcon {
   aspect-ratio: 1;
   object-fit: contain;
@@ -50,10 +60,12 @@
   margin-top: auto;
   margin-bottom: auto;
 }
+
 .inputContent {
   align-items: stretch;
   display: flex;
 }
+
 .caret {
   background-color: #212327;
   flex-shrink: 0;
@@ -62,6 +74,23 @@
   height: 20px;
   display: flex;
 }
+
+.blinkingCaret {
+  animation: blinkCaret 1s step-start infinite;
+}
+
+@keyframes blinkCaret {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .placeholder {
   -webkit-line-clamp: 1;
   font-feature-settings: "dlig" on;
@@ -70,6 +99,11 @@
   display: flex;
   align-items: center;
 }
+
+.placeholderSelected {
+  color: #0D0F10; /* 🔥 Black when selected */
+}
+
 .calendarDropdown {
   background-color: #fff;
   flex-direction: column;
@@ -81,12 +115,14 @@
   display: flex;
   box-shadow: 0 12px 24px #0003;
 }
+
 .calendarHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
 }
+
 .monthDisplay {
   color: #000;
   text-align: center;
@@ -101,11 +137,13 @@
   font-weight: 700;
   display: flex;
 }
+
 .monthText {
   align-self: stretch;
   margin-top: auto;
   margin-bottom: auto;
 }
+
 .monthIcon {
   aspect-ratio: 2;
   object-fit: contain;
@@ -116,6 +154,7 @@
   margin-top: auto;
   margin-bottom: auto;
 }
+
 .navigationButtons {
   justify-content: start;
   align-self: stretch;
@@ -125,6 +164,7 @@
   margin-bottom: auto;
   display: flex;
 }
+
 .prevButton,
 .nextButton {
   aspect-ratio: 1;
@@ -134,6 +174,7 @@
   width: 20px;
   cursor: pointer;
 }
+
 .calendarGrid {
   color: #0d0f10;
   white-space: nowrap;
@@ -145,11 +186,13 @@
   font-weight: 400;
   line-height: 1;
 }
+
 .calendarRow {
   justify-content: start;
   align-items: start;
   display: flex;
 }
+
 .dayHeader {
   font-feature-settings: "liga" off, "clig" off;
   border-radius: 2px;
@@ -157,12 +200,14 @@
   width: 32px;
   min-height: 32px;
 }
+
 .inactiveRow {
   color: #6c757d;
   justify-content: start;
   align-items: start;
   display: flex;
 }
+
 .dayCell,
 .activeDay,
 .inactiveDay {
@@ -177,9 +222,11 @@
   align-items: center;
   justify-content: center;
 }
+
 .inactiveDay {
   color: #6c757d;
 }
+
 .selectedDay {
   border: 2px solid var(--purple-accent-color, #8338ec);
   color: #fff;
@@ -195,6 +242,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .actionBar {
   color: #8338ec;
   white-space: nowrap;
@@ -211,6 +259,7 @@
   font-weight: 400;
   display: flex;
 }
+
 .cancelButton,
 .okButton {
   font-feature-settings: "liga" off, "clig" off;
