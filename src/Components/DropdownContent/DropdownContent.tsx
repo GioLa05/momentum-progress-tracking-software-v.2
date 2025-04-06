@@ -1,39 +1,59 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./DropdownContent.module.css";
 import LargePrimaryButton from "../LargePrimaryButton/LargePrimaryButton";
 import CheckboxBtn from "../CheckboxBtn/CheckboxBtn";
+import { API_URL, API_TOKEN } from "@/config/config";
+
+type Employee = {
+  id: number;
+  name: string;
+  surname: string;
+  avatar: string;
+};
 
 type Props = {
-  options?: any[];
-  selected: any;
-  onSelect: (value: any) => void;
+  selected: Employee | null;
+  onSelect: (value: Employee) => void;
   onChoose: () => void;
 };
 
-const DropdownContent = ({ options = [], selected, onSelect, onChoose }: Props) => {
+const DropdownContent = ({ selected, onSelect, onChoose }: Props) => {
+  const [employees, setEmployees] = useState<Employee[]>([]);
+
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      try {
+        const res = await fetch(`${API_URL}/employees`, {
+          headers: {
+            Authorization: `Bearer ${API_TOKEN}`,
+          },
+        });
+        const data = await res.json();
+        setEmployees(data);
+      } catch (err) {
+        console.error("❌ Failed to fetch employees:", err);
+      }
+    };
+
+    fetchEmployees();
+  }, []);
+
   return (
     <div className={styles.content}>
       <div className={styles.top}>
-        {options.map((option, index) => {
-          const isObject = typeof option === "object";
-          const label = isObject ? `${option.name} ${option.surname}` : option;
-          const avatar = isObject ? option.avatar : undefined;
-          const isChecked = isObject
-            ? selected?.id === option.id
-            : selected === option;
+        {employees.map((employee) => {
+          const isChecked = selected?.id === employee.id;
+          const label = `${employee.name} ${employee.surname}`;
 
           return (
             <CheckboxBtn
-              key={index}
+              key={employee.id}
               label={label}
-              avatar={avatar}
+              imageSrc={employee.avatar}
               isChecked={isChecked}
-              onClick={() => {
-                console.log("👉 Selected in UI:", option);
-                onSelect(option);
-              }}
+              onClick={() => onSelect(employee)}
             />
           );
         })}
