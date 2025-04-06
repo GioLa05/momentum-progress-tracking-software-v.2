@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import StatusButtonWrapper from "@/Components/StatusButtonWrapper/statusButtonWrapper";
-import styles from "./StatusDropdownClient.module.css";
+import styles from "./TaskStatusDropdown.module.css";
 import Image from "next/image";
 
-export default function StatusDropdownClient({ status }: { status: any }) {
+export default function TaskStatusDropdown({ status }: { status: any }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

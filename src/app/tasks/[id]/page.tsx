@@ -5,7 +5,7 @@ import Level from "@/Components/Level/Level";
 import RankButton from "@/Components/RankButton/RankButton";
 import Image from "next/image";
 import NewStatusWithEmployee from "@/Components/NewStatusWithEmployee/NewStatusWithEmployee";
-import StatusDropdownClient from "./StatusDropdownClient.tsx"; // 👈 NEW
+import TaskStatusDropdown from "@/Components/TaskStatusDropdown/TaskStatusDropdown";
 
 const getPriorityLevel = (name: string): string => {
   switch (name) {
@@ -31,7 +31,11 @@ const departmentStylesMap = {
   8: { text: "დიზაინი", color: "pink" },
 };
 
-export default async function Page({ params: paramsPromise }: { params: Promise<{ id: string }> }) {
+export default async function Page({
+  params: paramsPromise,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await paramsPromise;
 
   const res = await fetch(`${API_URL}/tasks/${id}`, {
@@ -48,8 +52,13 @@ export default async function Page({ params: paramsPromise }: { params: Promise<
   const task = await res.json();
 
   const date = new Date(task.due_date);
-  const weekday = new Intl.DateTimeFormat("ka-GE", { weekday: "short" }).format(date);
-  const formattedDate = `${weekday} - ${date.getDate().toString().padStart(2, "0")}/${date.getMonth() + 1}/${date.getFullYear()}`;
+  const weekday = new Intl.DateTimeFormat("ka-GE", { weekday: "short" }).format(
+    date
+  );
+  const formattedDate = `${weekday} - ${date
+    .getDate()
+    .toString()
+    .padStart(2, "0")}/${date.getMonth() + 1}/${date.getFullYear()}`;
   const departmentStyle = departmentStylesMap[task.department.id];
 
   return (
@@ -76,10 +85,8 @@ export default async function Page({ params: paramsPromise }: { params: Promise<
           <div>
             <p className={styles.taskH1}>დავალების დეტალები</p>
 
-            {/* სტატუსი */}
-            <StatusDropdownClient status={task.status} />
+            <TaskStatusDropdown status={undefined} />
 
-            {/* თანამშრომელი */}
             <div className={styles.centeredTaskDetails}>
               <div className={styles.detailsRight}>
                 <Image src={"/user.svg"} width={24} height={24} alt="user" />
@@ -94,10 +101,14 @@ export default async function Page({ params: paramsPromise }: { params: Promise<
               />
             </div>
 
-            {/* ვადა */}
             <div className={styles.centeredTaskDetails}>
               <div className={styles.detailsRight}>
-                <Image src={"/calendar.svg"} width={24} height={24} alt="calendar" />
+                <Image
+                  src={"/calendar.svg"}
+                  width={24}
+                  height={24}
+                  alt="calendar"
+                />
                 <p>დავალების ვადა</p>
               </div>
               <p className={styles.formattedDate}>{formattedDate}</p>
