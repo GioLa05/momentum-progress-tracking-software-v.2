@@ -85,7 +85,8 @@ export default async function Page({
           <div>
             <p className={styles.taskH1}>დავალების დეტალები</p>
 
-            <TaskStatusDropdown status={undefined} />
+            <TaskStatusDropdown status={task.status} taskId={task.id} />
+
 
             <div className={styles.centeredTaskDetails}>
               <div className={styles.detailsRight}>
