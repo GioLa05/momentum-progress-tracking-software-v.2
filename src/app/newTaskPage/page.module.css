@@ -33,3 +33,12 @@
     flex-direction: column;
     gap: 55px;
 }
+
+.priorityStatusGrouped {
+    height: 77px;
+    max-height: 77px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}

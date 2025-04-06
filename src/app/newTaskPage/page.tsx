@@ -7,6 +7,7 @@ import styles from "./page.module.css";
 import { TaskNameInput } from "@/Components/TaskNameInput/TaskNameInput";
 import { TaskDescriptionInput } from "@/Components/TaskDescriptionInput/TaskDescriptionInput";
 import PriorityButton from "@/Components/PriorityButton/PriorityButton.tsx";
+import StatusButtonStyled from "@/Components/StatusButton/statusButton";
 
 const API_URL = "https://momentum.redberryinternship.ge/api/tasks";
 const API_TOKEN = "9e8fd40a-1bc6-42ab-9deb-26ff41262121";
@@ -65,7 +66,10 @@ const NewTaskPage = () => {
             <Form className={styles.formContainer}>
               <TaskNameInput formik={formik} />
               <TaskDescriptionInput formik={formik} />
-              <PriorityButton formik={formik} />
+              <div className={styles.priorityStatusGrouped}>
+                <PriorityButton formik={formik} />
+                <StatusButtonStyled formik={formik} />
+              </div>
             </Form>
           )}
         </Formik>
