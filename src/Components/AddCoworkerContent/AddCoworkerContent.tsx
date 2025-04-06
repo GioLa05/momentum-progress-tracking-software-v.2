@@ -1,7 +1,7 @@
-// src/Components/AddCoworkerContent/AddCoworkerContent.tsx
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import ReactDOM from "react-dom";
 import styles from "./AddCoworkerContent.module.css";
 import Image from "next/image";
 import UploadPhoto from "../UploadPhoto/UploadPhoto";
@@ -21,6 +21,11 @@ type Props = {
 const AddCoworkerContent = ({ close, onEmployeeAdded }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isBrowser, setIsBrowser] = useState(false);
+
+  useEffect(() => {
+    setIsBrowser(true);
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -66,8 +71,8 @@ const AddCoworkerContent = ({ close, onEmployeeAdded }: Props) => {
           return;
         }
 
-        onEmployeeAdded(); // 🔁 Refresh context and tasks
-        close(); // ❌ Close modal
+        onEmployeeAdded();
+        close();
       } catch (err) {
         console.error("Network error:", err);
       }
@@ -92,7 +97,7 @@ const AddCoworkerContent = ({ close, onEmployeeAdded }: Props) => {
     setSelectedFile(file);
   };
 
-  return (
+  const modalContent = (
     <div className={styles.containerBackground}>
       <div className={styles.container} ref={containerRef}>
         <div className={styles.closeIcon}>
@@ -128,7 +133,7 @@ const AddCoworkerContent = ({ close, onEmployeeAdded }: Props) => {
                   showImage={false}
                   text="დაამატე თანამშრომელი"
                   onClick={formik.handleSubmit}
-                  type="submit" // ✅ explicitly submit the form
+                  type="submit"
                 />
               </div>
             </div>
@@ -137,6 +142,8 @@ const AddCoworkerContent = ({ close, onEmployeeAdded }: Props) => {
       </div>
     </div>
   );
+
+  return isBrowser ? ReactDOM.createPortal(modalContent, document.body) : null;
 };
 
 export default AddCoworkerContent;

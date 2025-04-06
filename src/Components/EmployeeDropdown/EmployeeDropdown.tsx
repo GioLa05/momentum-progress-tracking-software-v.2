@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import styles from "./EmployeeDropdown.module.css";
 import { API_URL, API_TOKEN } from "@/config/config";
+import AddCoworker from "../AddCoworker/AddCoworker";
+import AddCoworkerContent from "../AddCoworkerContent/AddCoworkerContent";
 
 type Employee = {
   id: number;
@@ -25,6 +27,7 @@ const EmployeeDropdown = ({ formik, width = 384, selectedDepartmentId }: Props) 
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+  const [showAddCoworkerContent, setShowAddCoworkerContent] = useState(false);
 
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
@@ -36,38 +39,47 @@ const EmployeeDropdown = ({ formik, width = 384, selectedDepartmentId }: Props) 
     setIsOpen(false);
   };
 
+  const fetchEmployees = async () => {
+    try {
+      const res = await fetch(`${API_URL}/employees`, {
+        headers: {
+          Authorization: `Bearer ${API_TOKEN}`,
+        },
+      });
+
+      if (!res.ok) throw new Error("Failed to fetch employees");
+
+      const data = await res.json();
+
+      const filtered = selectedDepartmentId
+        ? data.filter((emp: any) => emp.department?.id === selectedDepartmentId)
+        : data;
+
+      setEmployees(filtered);
+    } catch (error) {
+      console.error("Error fetching employees:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchEmployees = async () => {
-      try {
-        const res = await fetch(`${API_URL}/employees`, {
-          headers: {
-            Authorization: `Bearer ${API_TOKEN}`,
-          },
-        });
-
-        if (!res.ok) throw new Error("Failed to fetch employees");
-
-        const data = await res.json();
-
-        console.log("🔍 Employees from API:", data);
-        console.log("📌 Selected department ID:", selectedDepartmentId);
-
-        const filtered = selectedDepartmentId
-          ? data.filter((emp: any) => emp.department?.id === selectedDepartmentId)
-          : data;
-
-        console.log("✅ Filtered employees:", filtered);
-
-        setEmployees(filtered);
-      } catch (error) {
-        console.error("Error fetching employees:", error);
-      }
-    };
-
     if (isOpen) {
       fetchEmployees();
     }
-  }, [isOpen, selectedDepartmentId]); // ✅ dependency array is stable
+  }, [isOpen, selectedDepartmentId]);
+
+  const handleAddCoworkerClick = () => {
+    setShowAddCoworkerContent(true);
+  };
+
+  const handleCoworkerClose = () => {
+    setShowAddCoworkerContent(false);
+  };
+
+  const handleEmployeeAdded = (employee: Employee) => {
+    // Optional: update UI immediately with the new employee
+    fetchEmployees(); // Refresh the list
+    setShowAddCoworkerContent(false);
+  };
 
   return (
     <div className={styles.fullButton}>
@@ -113,6 +125,20 @@ const EmployeeDropdown = ({ formik, width = 384, selectedDepartmentId }: Props) 
 
         {isOpen && (
           <div className={styles.dropdownContent}>
+            {/* 🔼 AddCoworker trigger */}
+            {!showAddCoworkerContent ? (
+              <div className={styles.item} onClick={handleAddCoworkerClick}>
+                <AddCoworker />
+              </div>
+            ) : (
+              <div className={styles.addCoworkerContentWrapper}>
+                <AddCoworkerContent
+                  close={handleCoworkerClose}
+                  onEmployeeAdded={handleEmployeeAdded}
+                />
+              </div>
+            )}
+
             {employees.length === 0 ? (
               <div className={styles.emptyText}>ამ დეპარტამენტში თანამშრომლები არ მოიძებნა</div>
             ) : (
