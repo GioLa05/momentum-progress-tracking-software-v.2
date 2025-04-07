@@ -1,4 +1,3 @@
-// pages/Home.tsx
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
@@ -10,9 +9,9 @@ import { useEmployeeContext } from "@/app/api/employee-context/EmployeeContext";
 
 export default function Home() {
   const [filters, setFilters] = useState({
-    department: null,
-    priority: null,
-    employee: null,
+    department: [] as string[],
+    priority: [] as string[],
+    employee: null as { id: number } | null,
   });
 
   const [tasks, setTasks] = useState<any[]>([]);
@@ -40,13 +39,15 @@ export default function Home() {
 
   const filteredTasks = useMemo(() => {
     const result = tasks.filter((task) => {
-      const matchDepartment = filters.department
-        ? task.department.name.trim().toLowerCase() === filters.department.trim().toLowerCase()
-        : true;
+      const matchDepartment =
+        filters.department.length > 0
+          ? filters.department.includes(task.department.name)
+          : true;
 
-      const matchPriority = filters.priority
-        ? task.priority.name.trim().toLowerCase() === filters.priority.trim().toLowerCase()
-        : true;
+      const matchPriority =
+        filters.priority.length > 0
+          ? filters.priority.includes(task.priority.name)
+          : true;
 
       const matchEmployee = filters.employee
         ? task.employee.id === filters.employee.id
