@@ -12,6 +12,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import DepartmentDropdown from "../DepartmentDropdown/DepartmentDropdown";
 import { API_TOKEN } from "@/config/config";
+import { useEmployeeContext } from "@/app/api/employee-context/EmployeeContext"; // ✅ Import context
 
 type Props = {
   close: () => void;
@@ -22,6 +23,8 @@ const AddCoworkerContent = ({ close, onEmployeeAdded }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isBrowser, setIsBrowser] = useState(false);
+
+  const { refreshEmployees } = useEmployeeContext(); // ✅ Use context
 
   useEffect(() => {
     setIsBrowser(true);
@@ -71,8 +74,9 @@ const AddCoworkerContent = ({ close, onEmployeeAdded }: Props) => {
           return;
         }
 
-        onEmployeeAdded();
-        close();
+        refreshEmployees();        // ✅ Refresh the employee context
+        onEmployeeAdded();         // Optional external update
+        close();                   // Close the modal
       } catch (err) {
         console.error("Network error:", err);
       }
@@ -126,7 +130,6 @@ const AddCoworkerContent = ({ close, onEmployeeAdded }: Props) => {
                 onFileSelected={handleFileSelected}
               />
 
-              {/* ✅ Absolute Positioned Department Dropdown */}
               <div className={styles.absoluteDropdownWrapper}>
                 <DepartmentDropdown
                   formik={formik}
