@@ -13,7 +13,6 @@ import EmployeeDropdown from "@/Components/EmployeeDropdown/EmployeeDropdown";
 import DatePicker from "@/Components/Calendar/DatePicker";
 import CreateNewTask from "@/Components/CreateNewTask/CreateNewTask";
 
-
 const API_URL = "https://momentum.redberryinternship.ge/api/tasks";
 const API_TOKEN = "9e8fd40a-1bc6-42ab-9deb-26ff41262121";
 
@@ -89,7 +88,7 @@ const NewTaskPage = () => {
                 </div>
 
                 <div className={styles.rightCol}>
-                  <div className={styles.departmentDropdown}>
+                  <div className={`${styles.absolutePositioned} ${styles.departmentDropdown}`}>
                     <DepartmentDropdown
                       formik={formik}
                       width={550}
@@ -101,12 +100,15 @@ const NewTaskPage = () => {
                     />
                   </div>
 
-                  <EmployeeDropdown
-                    formik={formik}
-                    width={550}
-                    selectedDepartmentId={selectedDepartmentId}
-                  />
-                  <div className={styles.datePicker}>
+                  <div className={`${styles.absolutePositioned} ${styles.employeeDropdown}`}>
+                    <EmployeeDropdown
+                      formik={formik}
+                      width={550}
+                      selectedDepartmentId={selectedDepartmentId}
+                    />
+                  </div>
+
+                  <div className={`${styles.absolutePositioned} ${styles.datePicker}`}>
                     <DatePicker
                       formik={formik}
                       width={550}
@@ -115,6 +117,7 @@ const NewTaskPage = () => {
                     />
                   </div>
 
+                  {/* ✅ NOT absolute anymore */}
                   <div className={styles.createNewTask}>
                     <CreateNewTask
                       formik={formik}

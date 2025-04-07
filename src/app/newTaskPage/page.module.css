@@ -3,6 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .header {
@@ -25,6 +26,7 @@
   border: 0.3px solid #ddd2ff;
   background-color: #fbf9ffa6;
   padding: 65px 55px;
+  position: relative;
 }
 
 .formContainer {
@@ -33,7 +35,6 @@
   gap: 55px;
 }
 
-/* ✅ new grid layout for inputs */
 .inputGrid {
   width: 1260px;
   display: grid;
@@ -57,7 +58,6 @@
   align-items: flex-start;
 }
 
-/* ✅ button styling */
 .submitBtn {
   align-self: flex-end;
   background-color: #8338ec;
@@ -76,13 +76,33 @@
   background-color: #6b2bb9;
 }
 
-.datePicker {
-  padding-top: 125px;
+/* ✅ Absolute Positioned Components */
+.absolutePositioned {
+  position: absolute;
 }
 
+.departmentDropdown {
+  top: 65px;
+  left: 766px;
+  z-index: 999;
+}
+
+.employeeDropdown {
+  top: 175px;
+  left: 766px;
+  z-index: 998;
+}
+
+.datePicker {
+  top: 438px;
+  left: 766px;
+  gap: 4px;
+  z-index: 997;
+}
+
+/* ✅ CreateNewTask - NOT absolute anymore */
 .createNewTask {
-  width: 100%;
+  margin-top: 550px;
   display: flex;
   justify-content: flex-end;
-  padding-top: 150px;
 }

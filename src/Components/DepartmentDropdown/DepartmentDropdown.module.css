@@ -81,6 +81,8 @@
   font-size: 14px;
   line-height: 100%;
   letter-spacing: 0%;
+  max-height: 20vh;
+  overflow-y: auto;
 }
 
 .departmentItem {
