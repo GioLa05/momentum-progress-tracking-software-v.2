@@ -6,20 +6,20 @@ import CalendarGrid from "./CalendarGrid";
 import CalendarActions from "./CalendarActions";
 import { FormikProps } from "formik";
 
-// Reuse the same form values type
 type FormValues = {
   name: string;
   description: string;
   priority_id: number | null;
   employee_id: number | null;
   department_id: number | null;
+  due_date?: string;
 };
 
 type Props = {
-  formik: FormikProps<FormValues>; // ✅ Added
-  width: number; // ✅ Added
-  label: string; // ✅ Added
-  placeholder: string; // ✅ Added
+  formik: FormikProps<FormValues>;
+  width: number;
+  label: string;
+  placeholder: string;
   onDateChange?: (date: Date | null) => void;
 };
 
@@ -142,8 +142,18 @@ const DatePicker: React.FC<Props> = ({
       onDateChange(tempSelectedDate);
     }
 
-    // Optional: set Formik field if needed (e.g., due_date)
-    formik.setFieldValue("due_date", tempSelectedDate);
+    // ✅ Format date to "Apr 26 2025"
+    const formattedDate = tempSelectedDate
+      ? tempSelectedDate
+          .toLocaleDateString("en-US", {
+            month: "short",
+            day: "2-digit",
+            year: "numeric",
+          })
+          .replace(",", "")
+      : "";
+
+    formik.setFieldValue("due_date", formattedDate);
   };
 
   const toggleCalendar = () => {
