@@ -7,7 +7,6 @@ import Level from "../Level/Level";
 import RankButton from "../RankButton/RankButton";
 import Image from "next/image";
 
-// Define the TaskData type for the task object
 type TaskData = {
   id: number;
   name: string;
@@ -42,12 +41,9 @@ type Props = {
   task: TaskData;
   borderColor: string;
   comments?: number;
-  date?: string;
-  title?: string;
-  description?: string;
 };
 
-// Map Georgian priority names to levels
+// Priority level mapping
 const getPriorityLevel = (name: string): string => {
   switch (name) {
     case "დაბალი":
@@ -61,7 +57,7 @@ const getPriorityLevel = (name: string): string => {
   }
 };
 
-// Georgian months mapping
+// Georgian month names
 const georgianMonths = [
   "იანვარი",
   "თებერვალი",
@@ -116,9 +112,9 @@ const Task = ({ task, borderColor, comments = 0 }: Props) => {
     <Link
       href={`/tasks/${task.id}`}
       className={styles.button}
-      style={{ border: `1px solid ${borderColor}` }} // ✅ full border color here
+      style={{ border: `1px solid ${borderColor}` }}
     >
-      {/* Top section: Priority level, department, and due date */}
+      {/* Top info: priority + department + due date */}
       <div className={styles.top}>
         <div className={styles.topLeft}>
           <Level priority={getPriorityLevel(task.priority.name)} size="small" />
@@ -130,13 +126,13 @@ const Task = ({ task, borderColor, comments = 0 }: Props) => {
         <p>{finalDate}</p>
       </div>
 
-      {/* Middle section: Task name and description */}
+      {/* Title + description */}
       <div className={styles.middle}>
         <p className={styles.h1}>{task.name}</p>
         <p className={styles.h2}>{task.description}</p>
       </div>
 
-      {/* Bottom section: Employee avatar and comment count */}
+      {/* Bottom: avatar + comment count */}
       <div className={styles.bottom}>
         <Image
           className={styles.avatarContainer}
@@ -146,7 +142,7 @@ const Task = ({ task, borderColor, comments = 0 }: Props) => {
           alt="coworker"
         />
         <div className={styles.bottomRight}>
-          <Image src={"comment.svg"} width={22} height={22} alt="comment" />
+          <Image src="/comment.svg" width={22} height={22} alt="comment" />
           <p>{comments}</p>
         </div>
       </div>
