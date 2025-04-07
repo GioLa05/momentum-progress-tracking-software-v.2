@@ -12,10 +12,9 @@ const DropdownList = ({ onFilter }: { onFilter: (filters: any) => void }) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [departments, setDepartments] = useState<string[]>([]);
   const [priorities, setPriorities] = useState<string[]>([]);
-  const [allEmployees, setAllEmployees] = useState<any[]>([]);
   const [filteredEmployees, setFilteredEmployees] = useState<any[]>([]);
 
-  const { refreshTrigger } = useEmployeeContext();
+  const { employees: allEmployees, refreshTrigger } = useEmployeeContext();
 
   const [appliedValues, setAppliedValues] = useState({
     department: [] as string[],
@@ -43,20 +42,13 @@ const DropdownList = ({ onFilter }: { onFilter: (filters: any) => void }) => {
         });
         const prioritiesData = await priRes.json();
         setPriorities(prioritiesData.map((p: any) => p.name));
-
-        const empRes = await fetch(`${API_URL}/employees`, {
-          headers: { Authorization: `Bearer ${API_TOKEN}` },
-        });
-        const employeesData = await empRes.json();
-        setAllEmployees(employeesData);
-        setFilteredEmployees(employeesData);
       } catch (err) {
         console.error("Dropdown fetch error:", err);
       }
     };
 
     fetchDropdownData();
-  }, [refreshTrigger]);
+  }, []);
 
   useEffect(() => {
     if (tempValues.department.length > 0) {
@@ -166,23 +158,31 @@ const DropdownList = ({ onFilter }: { onFilter: (filters: any) => void }) => {
 
       <div className={styles.filters}>
         {appliedValues.department.map((dep) => (
-          <SelectedFilter key={dep} name={dep} onClear={() => {
-            const updated = appliedValues.department.filter((d) => d !== dep);
-            const newState = { ...appliedValues, department: updated };
-            setAppliedValues(newState);
-            setTempValues(newState);
-            onFilter(newState);
-          }} />
+          <SelectedFilter
+            key={dep}
+            name={dep}
+            onClear={() => {
+              const updated = appliedValues.department.filter((d) => d !== dep);
+              const newState = { ...appliedValues, department: updated };
+              setAppliedValues(newState);
+              setTempValues(newState);
+              onFilter(newState);
+            }}
+          />
         ))}
 
         {appliedValues.priority.map((pri) => (
-          <SelectedFilter key={pri} name={pri} onClear={() => {
-            const updated = appliedValues.priority.filter((p) => p !== pri);
-            const newState = { ...appliedValues, priority: updated };
-            setAppliedValues(newState);
-            setTempValues(newState);
-            onFilter(newState);
-          }} />
+          <SelectedFilter
+            key={pri}
+            name={pri}
+            onClear={() => {
+              const updated = appliedValues.priority.filter((p) => p !== pri);
+              const newState = { ...appliedValues, priority: updated };
+              setAppliedValues(newState);
+              setTempValues(newState);
+              onFilter(newState);
+            }}
+          />
         ))}
 
         {appliedValues.employee && (
@@ -195,7 +195,9 @@ const DropdownList = ({ onFilter }: { onFilter: (filters: any) => void }) => {
           />
         )}
 
-        {(appliedValues.department.length > 0 || appliedValues.priority.length > 0 || appliedValues.employee) && (
+        {(appliedValues.department.length > 0 ||
+          appliedValues.priority.length > 0 ||
+          appliedValues.employee) && (
           <button className={styles.clearAll} onClick={clearAll}>
             გასუფთავება
           </button>

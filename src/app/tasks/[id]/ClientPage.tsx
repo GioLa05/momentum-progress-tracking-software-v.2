@@ -55,16 +55,31 @@ const ClientPage = ({ task }: Props) => {
     fetchComments();
   }, []);
 
+  // ✅ Recursive function to count all comments and sub-comments
+  const countAllComments = (comments: CommentType[]): number => {
+    let total = 0;
+
+    for (const comment of comments) {
+      total += 1;
+      if (comment.sub_comments && comment.sub_comments.length > 0) {
+        total += countAllComments(comment.sub_comments);
+      }
+    }
+
+    return total;
+  };
+
   return (
     <div className={styles.commentsContainer}>
       <Comment taskId={task.id} onNewComment={fetchComments} />
+
       <div
         className={`${styles.quantityContainer} ${
           comments.length > 0 ? styles.withPadding : ""
         }`}
       >
         <p>კომენტარები</p>
-        <div className={styles.commentNumber}>{comments.length}</div>
+        <div className={styles.commentNumber}>{countAllComments(comments)}</div>
       </div>
 
       {comments.map((comment) => (
