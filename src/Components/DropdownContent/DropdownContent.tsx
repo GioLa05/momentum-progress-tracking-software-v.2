@@ -40,6 +40,7 @@ const DropdownContent = ({ options, selected, onSelect, onChoose }: Props) => {
           );
         })}
       </div>
+
       <div className={styles.bottom}>
         <LargePrimaryButton text="არჩევა" onClick={onChoose} />
       </div>

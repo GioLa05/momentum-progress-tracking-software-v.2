@@ -4,21 +4,25 @@
   background-color: #fff;
   border-radius: 10px;
   border: 0.5px solid #8338ec;
-  padding: 40px 30px 20px 30px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 20px;
   max-height: 40vh;
-  overflow-y: auto;
 }
 
+/* ✅ Only options scroll */
 .top {
+  flex: 1;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 22px;
 }
 
+/* ✅ Choose button stays at bottom */
 .bottom {
+  flex-shrink: 0;
   display: flex;
   justify-content: flex-end;
 }
