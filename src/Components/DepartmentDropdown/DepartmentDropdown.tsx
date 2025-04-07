@@ -13,16 +13,20 @@ type Props = {
   formik: any;
   width?: number;
   onSelect?: (departmentId: number) => void;
+  dropdownClassName?: string; // 👈 optional custom class for height
 };
 
-const DepartmentDropdown = ({ formik, width = 384, onSelect }: Props) => {
+const DepartmentDropdown = ({
+  formik,
+  width = 384,
+  onSelect,
+  dropdownClassName,
+}: Props) => {
   const [departments, setDepartments] = useState<Department[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState<Department | null>(null);
 
-  const toggleDropdown = () => {
-    setIsOpen((prev) => !prev);
-  };
+  const toggleDropdown = () => setIsOpen((prev) => !prev);
 
   const handleSelect = (department: Department) => {
     setSelectedDepartment(department);
@@ -36,20 +40,15 @@ const DepartmentDropdown = ({ formik, width = 384, onSelect }: Props) => {
       const fetchDepartments = async () => {
         try {
           const res = await fetch(`${API_URL}/departments`, {
-            headers: {
-              Authorization: `Bearer ${API_TOKEN}`,
-            },
+            headers: { Authorization: `Bearer ${API_TOKEN}` },
           });
-
           if (!res.ok) throw new Error("Failed to fetch departments");
-
           const data = await res.json();
           setDepartments(data);
         } catch (error) {
           console.error("Error fetching departments:", error);
         }
       };
-
       fetchDepartments();
     }
   }, [isOpen]);
@@ -88,7 +87,7 @@ const DepartmentDropdown = ({ formik, width = 384, onSelect }: Props) => {
         </div>
 
         {isOpen && (
-          <div className={styles.dropdownContent}>
+          <div className={`${styles.dropdownContent} ${dropdownClassName ? styles[dropdownClassName] : ""}`}>
             {departments.map((dept) => (
               <div
                 key={dept.id}

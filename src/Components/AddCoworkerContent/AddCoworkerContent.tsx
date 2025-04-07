@@ -125,7 +125,14 @@ const AddCoworkerContent = ({ close, onEmployeeAdded }: Props) => {
                 formik={formik}
                 onFileSelected={handleFileSelected}
               />
-              <DepartmentDropdown formik={formik} />
+
+              {/* ✅ Absolute Positioned Department Dropdown */}
+              <div className={styles.absoluteDropdownWrapper}>
+                <DepartmentDropdown
+                  formik={formik}
+                  dropdownClassName="smallDropdown"
+                />
+              </div>
 
               <div className={styles.bottomButtons}>
                 <CreateAnEmployee text="გაუქმება" onClick={close} />
