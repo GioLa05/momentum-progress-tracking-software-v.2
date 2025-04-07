@@ -1,59 +1,41 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./DropdownContent.module.css";
 import LargePrimaryButton from "../LargePrimaryButton/LargePrimaryButton";
 import CheckboxBtn from "../CheckboxBtn/CheckboxBtn";
-import { API_URL, API_TOKEN } from "@/config/config";
 
-type Employee = {
+type Option = {
   id: number;
   name: string;
-  surname: string;
-  avatar: string;
+  surname?: string;
+  avatar?: string;
 };
 
 type Props = {
-  selected: Employee | null;
-  onSelect: (value: Employee) => void;
+  options: Option[];
+  selected: Option | null;
+  onSelect: (value: Option) => void;
   onChoose: () => void;
 };
 
-const DropdownContent = ({ selected, onSelect, onChoose }: Props) => {
-  const [employees, setEmployees] = useState<Employee[]>([]);
-
-  useEffect(() => {
-    const fetchEmployees = async () => {
-      try {
-        const res = await fetch(`${API_URL}/employees`, {
-          headers: {
-            Authorization: `Bearer ${API_TOKEN}`,
-          },
-        });
-        const data = await res.json();
-        setEmployees(data);
-      } catch (err) {
-        console.error("❌ Failed to fetch employees:", err);
-      }
-    };
-
-    fetchEmployees();
-  }, []);
-
+const DropdownContent = ({ options, selected, onSelect, onChoose }: Props) => {
   return (
     <div className={styles.content}>
       <div className={styles.top}>
-        {employees.map((employee) => {
-          const isChecked = selected?.id === employee.id;
-          const label = `${employee.name} ${employee.surname}`;
+        {options.map((option) => {
+          const isChecked = selected?.id === option.id;
+          const label = option.surname
+            ? `${option.name} ${option.surname}`
+            : option.name;
 
           return (
             <CheckboxBtn
-              key={employee.id}
+              key={option.id}
               label={label}
-              imageSrc={employee.avatar}
+              imageSrc={option.avatar}
               isChecked={isChecked}
-              onClick={() => onSelect(employee)}
+              onClick={() => onSelect(option)}
             />
           );
         })}

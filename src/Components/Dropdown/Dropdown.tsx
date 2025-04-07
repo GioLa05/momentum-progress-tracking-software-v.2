@@ -6,15 +6,16 @@ import styles from "./Dropdown.module.css";
 import DropdownContent from "../DropdownContent/DropdownContent";
 import SelectedFilter from "@/Components/SelectedFilter/SelectedFilter";
 import { API_URL, API_TOKEN } from "../../config/config";
-import { useEmployeeContext } from "@/app/api/employee-context/EmployeeContext"; // 👈 context import
+import { useEmployeeContext } from "@/app/api/employee-context/EmployeeContext";
 
 const DropdownList = ({ onFilter }: { onFilter: (filters: any) => void }) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [departments, setDepartments] = useState<string[]>([]);
   const [priorities, setPriorities] = useState<string[]>([]);
-  const [employees, setEmployees] = useState<any[]>([]);
+  const [allEmployees, setAllEmployees] = useState<any[]>([]);
+  const [filteredEmployees, setFilteredEmployees] = useState<any[]>([]);
 
-  const { refreshTrigger } = useEmployeeContext(); // 👈 get context trigger
+  const { refreshTrigger } = useEmployeeContext();
 
   const [appliedValues, setAppliedValues] = useState({
     department: null as string | null,
@@ -47,33 +48,44 @@ const DropdownList = ({ onFilter }: { onFilter: (filters: any) => void }) => {
           headers: { Authorization: `Bearer ${API_TOKEN}` },
         });
         const employeesData = await empRes.json();
-        setEmployees(employeesData);
-        console.log("👤 DropdownList employees updated:", employeesData.length);
+        setAllEmployees(employeesData);
+        setFilteredEmployees(employeesData);
       } catch (err) {
         console.error("Dropdown fetch error:", err);
       }
     };
 
     fetchDropdownData();
-  }, [refreshTrigger]); // 👈 re-fetch when refreshTrigger updates
+  }, [refreshTrigger]);
+
+  useEffect(() => {
+    if (tempValues.department) {
+      const filtered = allEmployees.filter(
+        (emp) => emp.department?.name === tempValues.department
+      );
+      setFilteredEmployees(filtered);
+    } else {
+      setFilteredEmployees(allEmployees);
+    }
+  }, [tempValues.department, allEmployees]);
 
   const handleChoose = () => {
-    console.log("👉 Selected values:", JSON.stringify(tempValues, null, 2));
     setAppliedValues(tempValues);
     onFilter({ ...tempValues });
-    setActiveIndex(null); // optional: close dropdown after choosing
+    setActiveIndex(null);
   };
 
   const handleSelect = (value: any) => {
     if (activeIndex === 0) {
       setTempValues((prev) => ({
         ...prev,
-        department: prev.department === value ? null : value.toString(),
+        department: prev.department === value.name ? null : value.name,
+        employee: null, // Clear employee when department changes
       }));
     } else if (activeIndex === 1) {
       setTempValues((prev) => ({
         ...prev,
-        priority: prev.priority === value ? null : value.toString(),
+        priority: prev.priority === value.name ? null : value.name,
       }));
     } else if (activeIndex === 2) {
       setTempValues((prev) => ({
@@ -86,9 +98,13 @@ const DropdownList = ({ onFilter }: { onFilter: (filters: any) => void }) => {
   const selected =
     activeIndex === 0
       ? tempValues.department
+        ? { id: 0, name: tempValues.department }
+        : null
       : activeIndex === 1
       ? tempValues.priority
-      : tempValues.employee;
+        ? { id: 0, name: tempValues.priority }
+        : null
+      : allEmployees.find((e) => e.id === tempValues.employee?.id) ?? null;
 
   const clearFilter = (key: "department" | "priority" | "employee") => {
     const updated = { ...appliedValues, [key]: null };
@@ -126,14 +142,14 @@ const DropdownList = ({ onFilter }: { onFilter: (filters: any) => void }) => {
           <DropdownContent
             options={
               activeIndex === 0
-                ? departments
+                ? departments.map((d, i) => ({ id: i, name: d }))
                 : activeIndex === 1
-                ? priorities
-                : employees.map((e) => ({
+                ? priorities.map((p, i) => ({ id: i, name: p }))
+                : filteredEmployees.map((e) => ({
+                    id: e.id,
                     name: e.name,
                     surname: e.surname,
                     avatar: e.avatar,
-                    id: e.id,
                   }))
             }
             selected={selected}
@@ -159,7 +175,7 @@ const DropdownList = ({ onFilter }: { onFilter: (filters: any) => void }) => {
         {appliedValues.employee && (
           <SelectedFilter
             name={(() => {
-              const match = employees.find((e) => e.id === appliedValues.employee?.id);
+              const match = allEmployees.find((e) => e.id === appliedValues.employee?.id);
               return match ? `${match.name} ${match.surname}` : "";
             })()}
             onClear={() => clearFilter("employee")}

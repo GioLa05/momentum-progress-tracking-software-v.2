@@ -26,7 +26,7 @@ const NewTaskPage = () => {
     priority_id: null,
     employee_id: null,
     department_id: null,
-    status_id: null, // ✅ დამატებულია
+    status_id: null,
     due_date: null,
   };
 
@@ -36,7 +36,7 @@ const NewTaskPage = () => {
     priority_id: Yup.number().required("აირჩიე პრიორიტეტი"),
     employee_id: Yup.number().required("აირჩიე თანამშრომელი"),
     department_id: Yup.number().required("აირჩიე დეპარტამენტი"),
-    status_id: Yup.number().required("აირჩიე სტატუსი"), // ✅ დამატებულია
+    status_id: Yup.number().required("აირჩიე სტატუსი"),
   });
 
   const handleSubmit = async (values: any, { resetForm }: any) => {
@@ -50,8 +50,8 @@ const NewTaskPage = () => {
         body: JSON.stringify({
           name: values.name,
           description: values.description,
-          due_date: values.due_date ?? "2025-12-31", // ან გამოიყენე სწორად არჩეული თარიღი
-          status_id: values.status_id, // ✅ დაემატა
+          due_date: values.due_date ?? "2025-12-31",
+          status_id: values.status_id,
           employee_id: values.employee_id,
           priority_id: values.priority_id,
         }),
@@ -122,7 +122,7 @@ const NewTaskPage = () => {
                       label="დავალების შექმნა"
                       placeholder="შექმნა"
                       variant="form"
-                      type="submit" // ✅ ensures form submit
+                      type="submit"
                     />
                   </div>
                 </div>
