@@ -4,6 +4,11 @@
   align-items: flex-start;
 }
 
+.openFullButton {
+  padding-top: 12px;
+}
+
+
 .label {
   font-family: FiraGO;
   font-weight: 400;

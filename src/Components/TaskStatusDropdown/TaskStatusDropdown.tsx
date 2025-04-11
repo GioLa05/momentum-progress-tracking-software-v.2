@@ -25,7 +25,7 @@ export default function TaskStatusDropdown({ status, taskId }: Props) {
         <p>სტატუსი</p>
       </div>
       <StatusButtonWrapper
-        taskStatus={{ ...status, taskId }} // ✅ pass taskId here
+        taskStatus={{ ...status, taskId }}
         onOpenChange={setIsOpen}
       />
     </div>

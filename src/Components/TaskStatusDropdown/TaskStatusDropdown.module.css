@@ -1,27 +1,33 @@
 .taskDetails {
-    width: 493px;
-    display: grid;
-    grid-template-columns: 234px 1fr;
-    gap: 12px;
-    min-height: 70px;
-    transition: align-items 0.2s ease;
-  }
-  
-  .alignCenter {
-    align-items: center;
-  }
-  
-  .alignTop {
-    align-items: start;
-  }
-  
-  .detailsRight {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    font-family: FiraGO;
-    font-weight: 400;
-    font-size: 16px;
-    color: #474747;
-  }
-  
+  width: 493px;
+  display: grid;
+  grid-template-columns: 234px 1fr;
+  gap: 12px;
+  min-height: 70px;
+  z-index: 999;
+  position: relative;
+  z-index: 1;
+}
+
+.alignCenter {
+  align-items: center;
+}
+
+.alignTop {
+  align-items: start;
+}
+
+.detailsRight {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-family: FiraGO;
+  font-weight: 400;
+  font-size: 16px;
+  color: #474747;
+}
+
+.alignTop .detailsRight {
+  margin-top: 23px;
+}
+

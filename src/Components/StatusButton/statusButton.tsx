@@ -55,7 +55,7 @@ const StatusButtonStyled = ({ formik, showLabel = true, defaultValue }: Props) =
   }, []);
 
   return (
-    <div className={styles.fullButton}>
+    <div className={`${styles.fullButton} ${isOpen ? styles.openFullButton : ""}`}>
       {showLabel && <span className={styles.label}>სტატუსი*</span>}
 
       <div

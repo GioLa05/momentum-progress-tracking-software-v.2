@@ -153,3 +153,7 @@
   letter-spacing: 0%;
   color: white;
 }
+
+.taskStatusDropdown {
+  height: 70px;
+}
