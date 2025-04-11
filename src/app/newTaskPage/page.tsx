@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import styles from "./page.module.css";
 import { TaskNameInput } from "@/Components/TaskNameInput/TaskNameInput";
@@ -16,10 +16,21 @@ import CreateNewTask from "@/Components/CreateNewTask/CreateNewTask";
 const API_URL = "https://momentum.redberryinternship.ge/api/tasks";
 const API_TOKEN = "9e8fd40a-1bc6-42ab-9deb-26ff41262121";
 
+// ✅ Formik values ტიპი
+type FormValues = {
+  name: string;
+  description: string;
+  priority_id: number | null;
+  employee_id: number | null;
+  department_id: number | null;
+  status_id: number | null;
+  due_date: string | null;
+};
+
 const NewTaskPage = () => {
   const [selectedDepartmentId, setSelectedDepartmentId] = useState<number | null>(null);
 
-  const initialValues = {
+  const initialValues: FormValues = {
     name: "",
     description: "",
     priority_id: null,
@@ -38,7 +49,10 @@ const NewTaskPage = () => {
     status_id: Yup.number().required("აირჩიე სტატუსი"),
   });
 
-  const handleSubmit = async (values: any, { resetForm }: any) => {
+  const handleSubmit = async (
+    values: FormValues,
+    { resetForm }: FormikHelpers<FormValues>
+  ) => {
     try {
       const response = await fetch(API_URL, {
         method: "POST",
@@ -117,7 +131,6 @@ const NewTaskPage = () => {
                     />
                   </div>
 
-                  {/* ✅ NOT absolute anymore */}
                   <div className={styles.createNewTask}>
                     <CreateNewTask
                       formik={formik}

@@ -6,7 +6,38 @@ import Task from "../Task/Task";
 
 type Props = {
   text: "დასაწყები" | "პროგრესში" | "მზად ტესტირებისთვის" | "დასრულებული";
-  tasks: any[];
+  tasks: TaskType[];
+};
+
+type TaskType = {
+  id: number;
+  name: string;
+  description: string;
+  due_date: string;
+  status: {
+    id: number;
+    name: string;
+  };
+  priority: {
+    id: number;
+    name: string;
+    icon: string;
+  };
+  employee: {
+    id: number;
+    name: string;
+    surname: string;
+    avatar: string;
+    department: {
+      id: number;
+      name: string;
+    };
+  };
+  department: {
+    id: number;
+    name: string;
+  };
+  total_comments?: number;
 };
 
 const getColorInfo = (text: Props["text"]) => {
@@ -41,7 +72,7 @@ const Progress = ({ text, tasks }: Props) => {
             key={task.id}
             task={task}
             borderColor={color}
-            comments={task.total_comments ?? 0} // ✅ Pass the comment count
+            comments={task.total_comments ?? 0}
           />
         ))
       ) : (

@@ -3,10 +3,19 @@
 import React, { useRef, useState } from "react";
 import styles from "./UploadPhoto.module.css";
 import Image from "next/image";
+import { FormikProps } from "formik";
+
+// ფორმის ველების ტიპი
+type FormValues = {
+  name: string;
+  surname: string;
+  department_id: number | null;
+  avatar: string;
+};
 
 type Props = {
-  formik: any;
-  onFileSelected: (file: File) => void; // Callback to pass file to parent
+  formik: FormikProps<FormValues>;
+  onFileSelected: (file: File | null) => void; // ✅ გაფართოებული ტიპი
 };
 
 const UploadPhoto = ({ formik, onFileSelected }: Props) => {
@@ -26,7 +35,6 @@ const UploadPhoto = ({ formik, onFileSelected }: Props) => {
       return;
     }
 
-    // Validate file size (optional, based on previous requirement)
     if (file.size > 2 * 1024 * 1024) {
       setError("ფაილის ზომა არ უნდა აღემატებოდეს 2MB-ს");
       formik.setFieldError("avatar", "ფაილის ზომა ძალიან დიდია");
@@ -36,8 +44,8 @@ const UploadPhoto = ({ formik, onFileSelected }: Props) => {
     const previewUrl = URL.createObjectURL(file);
     setImagePreview(previewUrl);
     setError(null);
-    formik.setFieldValue("avatar", file.name); // Update Formik for validation
-    onFileSelected(file); // Pass file to parent
+    formik.setFieldValue("avatar", file.name);
+    onFileSelected(file);
   };
 
   const handleDeleteClick = () => {
@@ -46,7 +54,7 @@ const UploadPhoto = ({ formik, onFileSelected }: Props) => {
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
-    onFileSelected(null as any); // Clear file in parent
+    onFileSelected(null); // ✅ არ საჭიროებს any-ს
   };
 
   return (

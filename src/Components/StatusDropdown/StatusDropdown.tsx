@@ -1,26 +1,23 @@
 import React, { useState } from "react";
 import styles from "./StatusDropdown.module.css";
 
-type Props = {};
-
-const StatusDropdown = (props: Props) => {
+const StatusDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedStatus, setSelectedStatus] = useState("დასაწყები"); // Default is "დასაწყები"
+  const [selectedStatus, setSelectedStatus] = useState("დასაწყები");
 
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
   };
 
   const handleOptionClick = (status: string) => {
-    setSelectedStatus(status); // Set the selected status
-    setIsOpen(false); // Close the dropdown after selecting
+    setSelectedStatus(status);
+    setIsOpen(false);
   };
 
   return (
     <div className={`${styles.dropdownContainer} ${isOpen ? styles.openBorder : ""}`}>
-      {/* Wrapper for the border */}
       <div className={styles.dropdown} onClick={toggleDropdown}>
-        <p>{selectedStatus}</p> {/* Display the selected status */}
+        <p>{selectedStatus}</p>
         <svg
           width="14"
           height="15"
@@ -41,28 +38,16 @@ const StatusDropdown = (props: Props) => {
       </div>
       {isOpen && (
         <div className={styles.dropdownContent}>
-          <div
-            className={styles.option}
-            onClick={() => handleOptionClick("დასაწყები")}
-          >
+          <div className={styles.option} onClick={() => handleOptionClick("დასაწყები")}>
             <p>დასაწყები</p>
           </div>
-          <div
-            className={styles.option}
-            onClick={() => handleOptionClick("პროგრესში")}
-          >
+          <div className={styles.option} onClick={() => handleOptionClick("პროგრესში")}>
             <p>პროგრესში</p>
           </div>
-          <div
-            className={styles.option}
-            onClick={() => handleOptionClick("მზად ტესტირებისთვის")}
-          >
+          <div className={styles.option} onClick={() => handleOptionClick("მზად ტესტირებისთვის")}>
             <p>მზად ტესტირებისთვის</p>
           </div>
-          <div
-            className={styles.option}
-            onClick={() => handleOptionClick("დასრულებული")}
-          >
+          <div className={styles.option} onClick={() => handleOptionClick("დასრულებული")}>
             <p>დასრულებული</p>
           </div>
         </div>

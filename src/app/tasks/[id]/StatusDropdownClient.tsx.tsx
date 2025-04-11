@@ -5,7 +5,13 @@ import StatusButtonWrapper from "@/Components/StatusButtonWrapper/statusButtonWr
 import styles from "./StatusDropdownClient.module.css";
 import Image from "next/image";
 
-export default function StatusDropdownClient({ status }: { status: any }) {
+// ✅ ტიპი სტატუსისთვის
+type StatusType = {
+  id: number;
+  name: string;
+};
+
+export default function StatusDropdownClient({ status }: { status: StatusType }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

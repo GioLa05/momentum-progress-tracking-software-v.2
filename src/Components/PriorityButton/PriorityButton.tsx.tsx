@@ -3,15 +3,27 @@
 import React, { useEffect, useState } from "react";
 import styles from "./priorityButton.module.css";
 import { API_URL, API_TOKEN } from "@/config/config";
+import Image from "next/image";
+import { FormikProps } from "formik";
 
+// Priority type
 type Priority = {
   id: number;
   name: string;
   icon: string;
 };
 
+// Form field structure
+type FormValues = {
+  name: string;
+  description: string;
+  priority_id: number | null;
+  employee_id: number | null;
+  department_id: number | null;
+};
+
 type Props = {
-  formik: any;
+  formik: FormikProps<FormValues>;
 };
 
 const PriorityButton = ({ formik }: Props) => {
@@ -39,7 +51,7 @@ const PriorityButton = ({ formik }: Props) => {
 
           if (!res.ok) throw new Error("Failed to fetch priorities");
 
-          const data = await res.json();
+          const data: Priority[] = await res.json();
           setPriorities(data);
         } catch (error) {
           console.error("Error fetching priorities:", error);
@@ -62,9 +74,11 @@ const PriorityButton = ({ formik }: Props) => {
         <div className={styles.inputContainer} onClick={toggleDropdown}>
           <div className={styles.inputField}>
             {selectedPriority?.icon && (
-              <img
+              <Image
                 src={selectedPriority.icon}
                 alt={selectedPriority.name}
+                width={20}
+                height={20}
                 className={styles.icon}
               />
             )}
@@ -100,9 +114,11 @@ const PriorityButton = ({ formik }: Props) => {
                 className={styles.priorityItem}
                 onClick={() => handleSelect(priority)}
               >
-                <img
+                <Image
                   src={priority.icon}
                   alt={priority.name}
+                  width={20}
+                  height={20}
                   className={styles.icon}
                 />
                 <span>{priority.name}</span>

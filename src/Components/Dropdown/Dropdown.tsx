@@ -8,24 +8,56 @@ import SelectedFilter from "@/Components/SelectedFilter/SelectedFilter";
 import { API_URL, API_TOKEN } from "../../config/config";
 import { useEmployeeContext } from "@/app/api/employee-context/EmployeeContext";
 
-const DropdownList = ({ onFilter }: { onFilter: (filters: any) => void }) => {
+type Employee = {
+  id: number;
+  name: string;
+  surname: string;
+  avatar: string;
+  department: {
+    id: number;
+    name: string;
+  };
+};
+
+type Option = {
+  id: number;
+  name: string;
+};
+
+type Props = {
+  onFilter: (filters: {
+    department: string[];
+    priority: string[];
+    employee: { id: number } | null;
+  }) => void;
+};
+
+const DropdownList = ({ onFilter }: Props) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [departments, setDepartments] = useState<string[]>([]);
   const [priorities, setPriorities] = useState<string[]>([]);
-  const [filteredEmployees, setFilteredEmployees] = useState<any[]>([]);
+  const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>([]);
 
-  const { employees: allEmployees, refreshTrigger } = useEmployeeContext();
+  const { employees: allEmployees } = useEmployeeContext();
 
-  const [appliedValues, setAppliedValues] = useState({
-    department: [] as string[],
-    priority: [] as string[],
-    employee: null as { id: number } | null,
+  const [appliedValues, setAppliedValues] = useState<{
+    department: string[];
+    priority: string[];
+    employee: { id: number } | null;
+  }>({
+    department: [],
+    priority: [],
+    employee: null,
   });
 
-  const [tempValues, setTempValues] = useState({
-    department: [] as string[],
-    priority: [] as string[],
-    employee: null as { id: number } | null,
+  const [tempValues, setTempValues] = useState<{
+    department: string[];
+    priority: string[];
+    employee: { id: number } | null;
+  }>({
+    department: [],
+    priority: [],
+    employee: null,
   });
 
   useEffect(() => {
@@ -34,14 +66,14 @@ const DropdownList = ({ onFilter }: { onFilter: (filters: any) => void }) => {
         const depRes = await fetch(`${API_URL}/departments`, {
           headers: { Authorization: `Bearer ${API_TOKEN}` },
         });
-        const departmentsData = await depRes.json();
-        setDepartments(departmentsData.map((d: any) => d.name));
+        const departmentsData: { id: number; name: string }[] = await depRes.json();
+        setDepartments(departmentsData.map((d) => d.name));
 
         const priRes = await fetch(`${API_URL}/priorities`, {
           headers: { Authorization: `Bearer ${API_TOKEN}` },
         });
-        const prioritiesData = await priRes.json();
-        setPriorities(prioritiesData.map((p: any) => p.name));
+        const prioritiesData: { id: number; name: string }[] = await priRes.json();
+        setPriorities(prioritiesData.map((p) => p.name));
       } catch (err) {
         console.error("Dropdown fetch error:", err);
       }
@@ -73,7 +105,7 @@ const DropdownList = ({ onFilter }: { onFilter: (filters: any) => void }) => {
       : [...array, value];
   };
 
-  const handleSelect = (value: any) => {
+  const handleSelect = (value: Option | Employee) => {
     if (activeIndex === 0) {
       setTempValues((prev) => ({
         ...prev,
@@ -85,7 +117,7 @@ const DropdownList = ({ onFilter }: { onFilter: (filters: any) => void }) => {
         ...prev,
         priority: toggleValue(prev.priority, value.name),
       }));
-    } else if (activeIndex === 2) {
+    } else if (activeIndex === 2 && "id" in value) {
       setTempValues((prev) => ({
         ...prev,
         employee: prev.employee?.id === value.id ? null : { id: value.id },

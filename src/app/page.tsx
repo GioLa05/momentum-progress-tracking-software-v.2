@@ -7,6 +7,34 @@ import Progress from "@/Components/Progress/progress";
 import { API_URL, API_TOKEN } from "@/config/config";
 import { useEmployeeContext } from "@/app/api/employee-context/EmployeeContext";
 
+// ✅ Task ტიპის აღწერა
+type Task = {
+  id: number;
+  name: string;
+  description: string;
+  due_date: string;
+  status: {
+    id: number;
+    name: string;
+  };
+  priority: {
+    id: number;
+    name: string;
+    icon: string;
+  };
+  employee: {
+    id: number;
+    name: string;
+    surname: string;
+    avatar: string;
+  };
+  department: {
+    id: number;
+    name: string;
+  };
+  total_comments?: number;
+};
+
 export default function Home() {
   const [filters, setFilters] = useState({
     department: [] as string[],
@@ -14,7 +42,7 @@ export default function Home() {
     employee: null as { id: number } | null,
   });
 
-  const [tasks, setTasks] = useState<any[]>([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const { refreshTrigger } = useEmployeeContext();
 
   const fetchTasks = async () => {
@@ -24,7 +52,7 @@ export default function Home() {
           Authorization: `Bearer ${API_TOKEN}`,
         },
       });
-      const data = await response.json();
+      const data: Task[] = await response.json();
       setTasks(data);
       console.log("📦 All tasks loaded:", data.length);
     } catch (error) {
@@ -38,7 +66,7 @@ export default function Home() {
   }, [refreshTrigger]);
 
   const filteredTasks = useMemo(() => {
-    const result = tasks.filter((task) => {
+    return tasks.filter((task) => {
       const matchDepartment =
         filters.department.length > 0
           ? filters.department.includes(task.department.name)
@@ -55,8 +83,6 @@ export default function Home() {
 
       return matchDepartment && matchPriority && matchEmployee;
     });
-
-    return result;
   }, [filters, tasks]);
 
   return (

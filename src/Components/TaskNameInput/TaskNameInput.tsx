@@ -1,9 +1,20 @@
 "use client";
 
 import styles from "./TaskNameInput.module.css";
+import { FormikProps } from "formik";
+
+// ფორმის ველების ტიპი
+type FormValues = {
+  name: string;
+  description: string;
+  priority_id: number | null;
+  employee_id: number | null;
+  department_id: number | null;
+  status_id: number | null;
+};
 
 type Props = {
-  formik: any;
+  formik: FormikProps<FormValues>;
 };
 
 export function TaskNameInput({ formik }: Props) {

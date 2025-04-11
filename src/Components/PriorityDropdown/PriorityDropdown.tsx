@@ -2,22 +2,17 @@ import React, { useState } from "react";
 import styles from "./PriorityDropdown.module.css";
 import Image from "next/image";
 
-type Props = {};
-
-const PriorityDropdown = (props: Props) => {
+const PriorityDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
   };
 
   return (
-    <div
-      className={`${styles.dropdownContainer} ${isOpen ? styles.openBorder : ""}`}
-    >
+    <div className={`${styles.dropdownContainer} ${isOpen ? styles.openBorder : ""}`}>
       <div className={styles.dropdown}>
         <Image src={"/Medium.svg"} width={16} height={18} alt="medium" />
         <p>საშუალო</p>
-
         <svg
           width="14"
           height="15"

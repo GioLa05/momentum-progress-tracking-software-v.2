@@ -3,17 +3,27 @@
 import React, { useEffect, useState } from "react";
 import styles from "./DepartmentDropdown.module.css";
 import { API_URL, API_TOKEN } from "@/config/config";
+import { FormikProps } from "formik"; // ✅ ტიპის იმპორტი
 
 type Department = {
   id: number;
   name: string;
 };
 
+// ✅ განსაზღვრე ფორმის ტიპები
+type FormValues = {
+  name: string;
+  description: string;
+  priority_id: number | null;
+  employee_id: number | null;
+  department_id: number | null;
+};
+
 type Props = {
-  formik: any;
+  formik: FormikProps<FormValues>; // ✅ აღარ არის any
   width?: number;
   onSelect?: (departmentId: number) => void;
-  dropdownClassName?: string; // 👈 optional custom class for height
+  dropdownClassName?: string;
 };
 
 const DepartmentDropdown = ({

@@ -3,6 +3,17 @@
 import React, { useEffect, useState } from "react";
 import styles from "./statusButton.module.css";
 import { API_URL, API_TOKEN } from "@/config/config";
+import { FormikProps } from "formik";
+
+// ტიპი ფორმის ველებისთვის
+type FormValues = {
+  name: string;
+  description: string;
+  priority_id: number | null;
+  employee_id: number | null;
+  department_id: number | null;
+  status_id: number | null;
+};
 
 type Status = {
   id: number;
@@ -10,7 +21,7 @@ type Status = {
 };
 
 type Props = {
-  formik: any;
+  formik: FormikProps<FormValues>;
   showLabel?: boolean;
   defaultValue?: Status;
 };
@@ -39,11 +50,11 @@ const StatusButtonStyled = ({ formik, showLabel = true, defaultValue }: Props) =
 
         if (!res.ok) throw new Error("Failed to fetch statuses");
 
-        const data = await res.json();
+        const data: Status[] = await res.json();
         setStatuses(data);
 
         if (!selectedStatus && defaultValue) {
-          const match = data.find((s: Status) => s.id === defaultValue.id);
+          const match = data.find((s) => s.id === defaultValue.id);
           if (match) setSelectedStatus(match);
         }
       } catch (error) {
@@ -52,7 +63,7 @@ const StatusButtonStyled = ({ formik, showLabel = true, defaultValue }: Props) =
     };
 
     fetchStatuses();
-  }, []);
+  }, [defaultValue, selectedStatus]); // ✅ დამატებულია ორივე დამოკიდებულება
 
   return (
     <div className={`${styles.fullButton} ${isOpen ? styles.openFullButton : ""}`}>

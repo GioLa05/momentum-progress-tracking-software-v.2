@@ -1,9 +1,19 @@
 "use client";
 
 import styles from "./FullName.module.css";
+import { FormikProps } from "formik";
+
+// Define form fields type
+type FormValues = {
+  name: string;
+  surname: string;
+  priority_id: number | null;
+  employee_id: number | null;
+  department_id: number | null;
+};
 
 type Props = {
-  formik: any;
+  formik: FormikProps<FormValues>;
 };
 
 export function NameInput({ formik }: Props) {

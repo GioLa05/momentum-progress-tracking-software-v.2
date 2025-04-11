@@ -5,6 +5,8 @@ import styles from "./EmployeeDropdown.module.css";
 import { API_URL, API_TOKEN } from "@/config/config";
 import AddCoworker from "../AddCoworker/AddCoworker";
 import AddCoworkerContent from "../AddCoworkerContent/AddCoworkerContent";
+import { FormikProps } from "formik";
+import Image from "next/image";
 
 type Employee = {
   id: number;
@@ -17,8 +19,16 @@ type Employee = {
   };
 };
 
+type FormValues = {
+  name: string;
+  description: string;
+  priority_id: number | null;
+  employee_id: number | null;
+  department_id: number | null;
+};
+
 type Props = {
-  formik: any;
+  formik: FormikProps<FormValues>;
   width?: number;
   selectedDepartmentId?: number | null;
 };
@@ -49,10 +59,10 @@ const EmployeeDropdown = ({ formik, width = 384, selectedDepartmentId }: Props) 
 
       if (!res.ok) throw new Error("Failed to fetch employees");
 
-      const data = await res.json();
+      const data: Employee[] = await res.json();
 
       const filtered = selectedDepartmentId
-        ? data.filter((emp: any) => emp.department?.id === selectedDepartmentId)
+        ? data.filter((emp) => emp.department?.id === selectedDepartmentId)
         : data;
 
       setEmployees(filtered);
@@ -65,7 +75,8 @@ const EmployeeDropdown = ({ formik, width = 384, selectedDepartmentId }: Props) 
     if (isOpen) {
       fetchEmployees();
     }
-  }, [isOpen, selectedDepartmentId]);
+    // ✅ add fetchEmployees to deps to satisfy react-hooks/exhaustive-deps
+  }, [isOpen, selectedDepartmentId, fetchEmployees]);
 
   const handleAddCoworkerClick = () => {
     setShowAddCoworkerContent(true);
@@ -75,9 +86,8 @@ const EmployeeDropdown = ({ formik, width = 384, selectedDepartmentId }: Props) 
     setShowAddCoworkerContent(false);
   };
 
-  const handleEmployeeAdded = (employee: Employee) => {
-    // Optional: update UI immediately with the new employee
-    fetchEmployees(); // Refresh the list
+  const handleEmployeeAdded = () => {
+    fetchEmployees();
     setShowAddCoworkerContent(false);
   };
 
@@ -98,9 +108,11 @@ const EmployeeDropdown = ({ formik, width = 384, selectedDepartmentId }: Props) 
                 : "აირჩიე თანამშრომელი"}
             </span>
             {selectedEmployee?.avatar && (
-              <img
+              <Image
                 src={selectedEmployee.avatar}
                 alt="avatar"
+                width={28}
+                height={28}
                 className={styles.avatarMini}
               />
             )}
@@ -125,7 +137,6 @@ const EmployeeDropdown = ({ formik, width = 384, selectedDepartmentId }: Props) 
 
         {isOpen && (
           <div className={styles.dropdownContent}>
-            {/* 🔼 AddCoworker trigger */}
             {!showAddCoworkerContent ? (
               <div className={styles.item} onClick={handleAddCoworkerClick}>
                 <AddCoworker />
@@ -148,9 +159,11 @@ const EmployeeDropdown = ({ formik, width = 384, selectedDepartmentId }: Props) 
                   className={styles.item}
                   onClick={() => handleSelect(emp)}
                 >
-                  <img
+                  <Image
                     src={emp.avatar}
                     alt={`${emp.name} ${emp.surname}`}
+                    width={32}
+                    height={32}
                     className={styles.avatar}
                   />
                   <span>{emp.name} {emp.surname}</span>
